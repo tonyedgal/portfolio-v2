@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./components/NavBar";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,10 +23,12 @@ export default function RootLayout({
       >
         <main className="p-4 py-24 gap-6 w-full lg:w-[55%]">
           <section className="flex w-full gap-4 justify-start mb-6 p-2">
-            <img
-              src="./assets/Spaceman.jpg"
-              alt=""
-              className="w-24 h-24 rounded-full shadow-lg grayscale hover:grayscale-0 duration-300"
+            <Image
+              src={"/Spaceman.jpg"}
+              alt="Portrait"
+              height={"96"}
+              width={"96"}
+              className="rounded-full shadow-lg"
             />
             <div className="flex flex-col gap-2 justify-center">
               <h2 className="font-medium text-[2rem] mb-0 text-zinc-100">
