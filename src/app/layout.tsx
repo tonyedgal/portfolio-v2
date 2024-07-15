@@ -19,10 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-gradient-to-tr overflow-x-hidden min-w-screen from-zinc-950 via-stone-900 to-neutral-950 flex min-h-screen flex-col items-center justify-between`}
+        className={`${inter.className} text-[#9BA88D] bg-[#2B2A2B] overflow-x-hidden min-w-screen flex min-h-screen flex-col items-center justify-between`}
       >
         <main className="p-4 py-24 gap-6 w-full lg:w-[55%]">
-          <section className="flex w-full gap-4 justify-start mb-6 p-2">
+          <section className="flex flex-col mx-auto w-full gap-4 justify-center items-center mb-6 py-2">
             <Image
               src={"/Spaceman.jpg"}
               alt="Portrait"
@@ -31,9 +31,7 @@ export default function RootLayout({
               className="rounded-full shadow-lg"
             />
             <div className="flex flex-col gap-2 justify-center">
-              <h2 className="font-medium text-[2rem] mb-0 text-zinc-100">
-                SpaceMan
-              </h2>
+              <h2 className="font-medium text-[2rem] mb-0">SpaceMan</h2>
             </div>
           </section>
           <NavBar />
