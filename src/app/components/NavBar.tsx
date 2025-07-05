@@ -18,15 +18,15 @@ export default function NavBar() {
   const [hoveredPath, setHoveredPath] = useState<string | null>(pathName);
 
   return (
-    <div className="border rounded-md flex border-[#C9D3C3] w-fit mx-auto p-1 mb-12 sticky top-4 z-[100] bg-transparent backdrop-blur-md m-4">
-      <nav className="flex gap-2 relative justify-between z-[100] rounded-lg mx-auto">
+    <div className="border rounded-xs flex border-[#C9D3C3] w-fit mx-auto p-1 mb-12 sticky top-4 z-100 bg-transparent backdrop-blur-md m-4">
+      <nav className="flex relative justify-between z-100 rounded-lg mx-auto">
         {navItems.map((item, i) => {
           const active = pathName === item.path;
 
           return (
             <Link
               key={item.path}
-              className={`px-3 shrink py-2 rounded-md leading-[14px] text-white text-sm lg:text-base relative no-underline duration-300 ease-in ${
+              className={`px-5 shrink py-2 rounded-none leading-[14px] text-white text-sm lg:text-base relative no-underline duration-300 ease-in ${
                 active ? "text-zinc-100 font-bold" : "font-extralight"
               }`}
               href={item.path}
@@ -37,7 +37,7 @@ export default function NavBar() {
               <span>{item.name}</span>
               {item.path === hoveredPath && (
                 <motion.div
-                  className="absolute bottom-0 left-0 h-full bg-[#677727]  mix-blend-difference rounded-sm -z-10"
+                  className="absolute bottom-0 left-0 h-full bg-[#677727]  mix-blend-difference rounded-none -z-10"
                   layoutId="navbar"
                   aria-hidden="true"
                   style={{
