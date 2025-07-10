@@ -24,7 +24,7 @@ export default function RootLayout({
         <main className="p-4 py-24 gap-6 w-full lg:w-[55%]">
           <section className="flex flex-col mx-auto w-full gap-4 justify-center items-center mb-6 py-2">
             <Image
-              src={"/Spaceman.jpg"}
+              src={"/Spaceman.webp"}
               alt="Portrait"
               height={"96"}
               width={"96"}
