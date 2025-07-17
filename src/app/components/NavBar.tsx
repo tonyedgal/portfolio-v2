@@ -18,7 +18,7 @@ export default function NavBar() {
   const [hoveredPath, setHoveredPath] = useState<string | null>(pathName);
 
   return (
-    <div className="border rounded-xs flex border-[#C9D3C3] w-fit mx-auto p-1 mb-12 sticky top-4 z-100 bg-transparent backdrop-blur-md m-4">
+    <div className="border rounded-xs shadow-sm flex border-border w-fit mx-auto p-1 mb-12 sticky top-4 z-100 bg-transparent backdrop-blur-md m-4">
       <nav className="flex relative justify-between z-100 rounded-lg mx-auto">
         {navItems.map((item, i) => {
           const active = pathName === item.path;
@@ -26,8 +26,8 @@ export default function NavBar() {
           return (
             <Link
               key={item.path}
-              className={`px-5 shrink py-2 rounded-none leading-[14px] text-white text-sm lg:text-base relative no-underline duration-300 ease-in ${
-                active ? "text-zinc-100 font-bold" : "font-extralight"
+              className={`px-5 shrink py-3 text-muted-foreground rounded-none leading-[14px] text-sm lg:text-base relative no-underline duration-300 ease-in ${
+                active ? "font-medium" : ""
               }`}
               href={item.path}
               data-active={active}
@@ -37,7 +37,7 @@ export default function NavBar() {
               <span>{item.name}</span>
               {item.path === hoveredPath && (
                 <motion.div
-                  className="absolute bottom-0 left-0 h-full bg-[#677727]  mix-blend-difference rounded-none -z-10"
+                  className="absolute bottom-0 left-0 h-full bg-muted  mix-blend-difference rounded-none -z-10"
                   layoutId="navbar"
                   aria-hidden="true"
                   style={{
@@ -46,7 +46,7 @@ export default function NavBar() {
                   transition={{
                     // type: "spring",
                     bounce: 0,
-                    stiffness: 130,
+                    stiffness: 100,
                     damping: 10,
                     duration: 0.3,
                   }}
@@ -58,7 +58,7 @@ export default function NavBar() {
                   transition={{ duration: 0.5 }}
                   layoutId="pill"
                 >
-                  <div className="h-[4px] w-full border rounded-full border-white bg-white"></div>
+                  <div className="h-[4px] w-full border rounded-full border-border bg-border"></div>
                 </motion.div>
               )}
             </Link>
