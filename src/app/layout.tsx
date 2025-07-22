@@ -1,10 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import NavBar from "./components/NavBar";
-import Image from "next/image";
-import { ThemeProvider } from "../components/theme-provider";
-import { ThemeToggle } from "../components/ThemeToggle";
+import NavBar from "../components/NavBar";
+import { ThemeProvider } from "../components/theme/theme-provider";
+import { ThemeToggle } from "../components/theme/ThemeToggle";
+import BackgroundPattern from "../components/BackgroundPattern";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,33 +20,27 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.className} overflow-x-hidden min-w-screen flex min-h-screen flex-col items-center justify-between`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ThemeToggle />
-          <main className="p-4 py-24 gap-6 w-full lg:w-[55%]">
-            <section className="flex flex-col mx-auto w-full gap-4 justify-center items-center mb-6 py-2">
-              <Image
-                src={"/Spaceman.webp"}
-                alt="Portrait"
-                height={"96"}
-                width={"96"}
-                className="rounded-full shadow-lg"
-              />
-              <div className="flex flex-col gap-2 justify-center">
-                <h2 className="font-medium text-[2rem] mb-0">SpaceMan</h2>
-              </div>
-            </section>
-            <NavBar />
-            {children}
-          </main>
-        </ThemeProvider>
+      <body className={`${inter.className} overflow-hidden`}>
+        <div className="relative grid min-h-screen grid-cols-[2.5rem_auto_2.5rem]">
+          <div className="relative col-start-2 h-full w-full">
+            <BackgroundPattern />
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ThemeToggle />
+              <NavBar />
+              <main className="pt-4 gap-6 w-full">{children}</main>
+            </ThemeProvider>
+          </div>
+
+          <div className="relative -right-px col-start-1 row-span-full row-start-1 border-x border-border bg-[image:repeating-linear-gradient(315deg,var(--border)_0,var(--border)_1px,transparent_0,transparent_50%)] bg-[size:10px_10px]"></div>
+          <div className="relative -left-px col-start-3 row-span-full row-start-1 border-x border-border bg-[image:repeating-linear-gradient(315deg,var(--border)_0,var(--border)_1px,transparent_0,transparent_50%)] bg-[size:10px_10px]"></div>
+          <div className="relative -bottom-px col-span-full col-start-1 row-start-2 h-px bg-border"></div>
+          <div className="relative -top-px col-span-full col-start-1 row-start-4 h-px bg-border"></div>
+        </div>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -18,16 +19,25 @@ export default function NavBar() {
   const [hoveredPath, setHoveredPath] = useState<string | null>(pathName);
 
   return (
-    <div className="border rounded-xs shadow-sm flex border-border w-fit mx-auto p-1 mb-12 sticky top-4 z-100 bg-transparent backdrop-blur-md m-4">
-      <nav className="flex relative justify-between z-100 rounded-lg mx-auto">
+    <div className="border rounded-xs shadow-sm flex items-center border-border w-fit mx-auto p-1 sticky top-8 z-100 bg-transparent backdrop-blur-md">
+      <nav className="flex items-center relative justify-between z-100 rounded-lg mx-auto">
+        <Link href="/" className="px-1">
+          <Image
+            src={"/Spaceman.webp"}
+            alt="Portrait"
+            height={"32"}
+            width={"32"}
+            className="rounded-full"
+          />
+        </Link>
         {navItems.map((item, i) => {
           const active = pathName === item.path;
 
           return (
             <Link
               key={item.path}
-              className={`px-5 shrink py-3 text-muted-foreground rounded-none leading-[14px] text-sm lg:text-base relative no-underline duration-300 ease-in ${
-                active ? "font-medium" : ""
+              className={`px-5 shrink py-3 text-muted-foreground rounded-none leading-[14px] text-xs lg:text-sm relative no-underline duration-300 ease-in-out ${
+                active ? "font-semibold" : ""
               }`}
               href={item.path}
               data-active={active}
@@ -37,7 +47,7 @@ export default function NavBar() {
               <span>{item.name}</span>
               {item.path === hoveredPath && (
                 <motion.div
-                  className="absolute bottom-0 left-0 h-full bg-muted  mix-blend-difference rounded-none -z-10"
+                  className="absolute bottom-0 left-0 h-full bg-muted mix-blend-difference rounded-none -z-10"
                   layoutId="navbar"
                   aria-hidden="true"
                   style={{
@@ -58,7 +68,7 @@ export default function NavBar() {
                   transition={{ duration: 0.5 }}
                   layoutId="pill"
                 >
-                  <div className="h-[4px] w-full border rounded-full border-border bg-border"></div>
+                  <div className="h-[2px] w-full border border-accent bg-accent"></div>
                 </motion.div>
               )}
             </Link>
