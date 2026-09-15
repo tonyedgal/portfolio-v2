@@ -1,7 +1,7 @@
 # Portfolio releases
 
 The portfolio deploys to `tony.spaceman.sh` through OpenNext and Cloudflare
-Workers. Pull requests targeting `new-design` build the Worker and upload an
+Workers. Pull requests targeting `main` build the Worker and upload an
 aliased preview version. Changesets collects release notes and opens a release
 pull request; merging that pull request creates a GitHub release and deploys the
 new version to production.
@@ -36,7 +36,7 @@ pnpm changeset
 ```
 
 Choose `portfolio-v2`, select the version bump, and describe the user-visible
-change. After the pull request merges into `new-design`, the release workflow
+change. After the pull request merges into `main`, the release workflow
 creates or updates `chore: release portfolio`. Review and merge that generated
 pull request to publish the GitHub release and deploy the Worker.
 

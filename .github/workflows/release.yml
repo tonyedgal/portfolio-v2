@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - new-design
+      - main
 concurrency:
   group: portfolio-production-release
   cancel-in-progress: false

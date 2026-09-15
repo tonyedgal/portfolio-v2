@@ -3,7 +3,7 @@ name: Worker preview
 on:
   pull_request:
     branches:
-      - new-design
+      - main
     types: [opened, synchronize, reopened]
   workflow_dispatch:
 
@@ -43,7 +43,7 @@ jobs:
 
       - name: Require a changeset
         if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')
-        run: pnpm changeset status --since=origin/new-design
+        run: pnpm changeset status --since=origin/main
 
       - name: Build Worker
         run: pnpm build:worker
