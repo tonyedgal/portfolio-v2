@@ -13,19 +13,30 @@ variables → Actions**:
 
 - `CLOUDFLARE_ACCOUNT_ID`: the ID of the Cloudflare account that owns the
   `spaceman.sh` zone.
-- `CLOUDFLARE_API_TOKEN`: an API token created from Cloudflare's **Edit
+- `CLOUDFLARE_API_TOKEN`: an account API token created from Cloudflare's **Edit
   Cloudflare Workers** template and restricted to that account and the
-  `spaceman.sh` zone.
+  `spaceman.sh` domain.
 
 Under **Settings → Actions → General**, allow GitHub Actions to create pull
 requests. Create a GitHub environment named `production`; optionally add a
 required reviewer so merging a release pull request still pauses before the
 live deployment.
 
-The first production release creates the `tony-portfolio` Worker and attaches
-the `tony.spaceman.sh` Custom Domain. If pull-request previews are needed before
-that first release, deploy the Worker once from a trusted local checkout with
-`pnpm deploy`.
+The `tony-portfolio` Worker and its `tony.spaceman.sh` Custom Domain already
+exist. Keep **Preview URLs** enabled for this Worker in Cloudflare so pull
+requests can receive aliased `workers.dev` URLs.
+
+The current API token expires after 90 days. Before it expires, create a
+replacement token with the same scope and update the GitHub secret:
+
+```bash
+gh secret set CLOUDFLARE_API_TOKEN --repo tonyedgal/portfolio-v2
+```
+
+After replacing an expired or revoked token, rerun the failed GitHub Actions
+job. An authentication failure occurs before Wrangler uploads the Worker;
+a missing preview URL after a successful upload means Preview URLs are disabled
+for the Worker.
 
 ## Each release
 
