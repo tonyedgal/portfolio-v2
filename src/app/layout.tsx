@@ -4,6 +4,7 @@ import { Manrope, Noto_Sans, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { PortfolioLayout } from "@/components/PortfolioLayout";
 import { cn } from "@/lib/utils";
+import { siteUrl } from "@/lib/site-metadata";
 
 const manropeHeading = Manrope({
   subsets: ["latin"],
@@ -18,6 +19,7 @@ const fontMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: { default: "Experience · Tony Edgal", template: "%s · Tony Edgal" },
   description:
     "Tony Edgal is a Frontend, Design, and Fullstack Engineer building web and desktop applications with TypeScript, React, and Next.js.",
