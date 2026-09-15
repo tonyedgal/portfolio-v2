@@ -55,6 +55,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           PREVIEW_ALIAS: pr-${{ github.event.pull_request.number || github.run_number }}
         run: |
+          set -o pipefail
           upload_log="$RUNNER_TEMP/wrangler-upload.log"
 
           pnpm exec wrangler versions upload \
@@ -64,7 +65,10 @@ jobs:
           preview_url="$(grep -Eo 'https://[a-z0-9.-]+\.workers\.dev' "$upload_log" | tail -1)"
 
           if [ -z "$preview_url" ]; then
-            echo "Wrangler did not report a preview URL." >&2
+            echo "### Worker preview unavailable" >> "$GITHUB_STEP_SUMMARY"
+            echo "The Worker version uploaded, but Wrangler returned no preview URL." >> "$GITHUB_STEP_SUMMARY"
+            echo "Enable Preview URLs for tony-portfolio in Cloudflare, then rerun this job." >> "$GITHUB_STEP_SUMMARY"
+            echo "Wrangler uploaded the Worker version but returned no preview URL. Enable Preview URLs for tony-portfolio in Cloudflare." >&2
             exit 1
           fi
 
