@@ -1,0 +1,116 @@
+# Clean React code with the `useImperativeHandle` hook
+
+In the quest for a cleaner and more concise codebase that adheres to the DRY principle, one React hook that stands out is `useImperativeHandle`.
+
+React’s declarative nature encourages developers to build components that rely on props and state to manage behavior and rendering. However, in some cases imperative programming can simplify complex state management, especially when a child component interacts with multiple parents.
+
+## The `useImperativeHandle()` hook pattern
+
+In React, as the app size grows, it also starts to grow in complexity and it becomes expedient for developers to use advanced patterns to reach their goals, as simpler patterns can no longer adequately provide the clean solutions we require.
+
+Managing state in child components typically involves lifting state up to parent components. However, when a child is shared among multiple parents, duplicating state can lead to repetitive code and potential inconsistencies. To address this, you can centralize state management within the child itself, using the `useImperativeHandle` hook to expose imperative methods for modifying its state. This approach prevents redundancy and promotes a more maintainable architecture.
+
+## The pattern in action
+
+Below is an example that demonstrates how to use `useImperativeHandle` for better state management. In this pattern, a child component exposes methods like `focus` and `clear` through its ref, allowing parent components to control its behavior without relying solely on props or state hooks.
+
+### Example
+
+```javascript
+import React, { useRef, forwardRef, useImperativeHandle } from "react"
+
+const ChildInput = forwardRef((props, ref) => {
+  const inputRef = useRef()
+
+  useImperativeHandle(ref, () => ({
+    focus: () => inputRef.current?.focus(),
+    clear: () => {
+      inputRef.current.value = ""
+    },
+  }))
+
+  return <input ref={inputRef} {...props} />
+})
+
+export default function ParentComponent() {
+  const inputRef = useRef()
+
+  return (
+    <div className="p-4 space-y-4">
+      <ChildInput ref={inputRef} placeholder="Type something..." />
+      <div className="space-x-2">
+        <button onClick={() => inputRef.current.focus()}>
+          Focus Input
+        </button>
+        <button onClick={() => inputRef.current.clear()}>
+          Clear Input
+        </button>
+      </div>
+    </div>
+  )
+}
+```
+
+React 19 further refines this pattern by eliminating the need for `forwardRef`. The example below illustrates the same behavior with a cleaner syntax.
+
+### React 19 example
+
+```javascript
+import React, { useImperativeHandle, useRef } from "react"
+
+function ChildInput({ ref, ...props }) {
+  const inputRef = useRef()
+
+  // Expose imperative methods to the parent via the ref.
+  useImperativeHandle(ref, () => ({
+    focus: () => inputRef.current?.focus(),
+    clear: () => {
+      if (inputRef.current) {
+        inputRef.current.value = ""
+      }
+    },
+  }))
+
+  return <input ref={inputRef} {...props} />
+}
+
+function ParentComponent() {
+  const inputRef = useRef()
+
+  return (
+    <div className="p-4 space-y-4">
+      <ChildInput ref={inputRef} placeholder="Type something..." />
+      <div className="space-x-2">
+        <button onClick={() => inputRef.current.focus()}>
+          Focus Input
+        </button>
+        <button onClick={() => inputRef.current.clear()}>
+          Clear Input
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export default ParentComponent
+```
+
+## Conclusion
+
+This approach demonstrates how `useImperativeHandle` can simplify state management in complex React applications. While the example above provides a practical solution, I encourage you to learn more about `useImperativeHandle`, declarative programming, and imperative programming.
+
+Here are starter prompts you can use to get detailed explanations of each concept and better understand their trade-offs and best practices.
+
+```
+Explain declarative and imperative programming.
+```
+
+```
+Explain declarative and imperative programming in the context of React.
+```
+
+```
+Explain the useImperativeHandle hook, and give examples of when to use this hook versus using just props and state.
+```
+
+[← Back to blog](/blog)

@@ -1,0 +1,163 @@
+# Closures in JavaScript: all the basics you need to know
+
+This article covers:
+
+- Functions and scopes
+- What closures are in JavaScript
+- How closures are handled in memory
+- Why they are named closures
+
+## Functions
+
+A function is similar to a procedure or a set of statements used to perform a specific task. For a procedure to qualify as a function, it should take some input, perform actions on that data, and return a result.
+
+Generally speaking, there are several ways to define functions:
+
+- Function declaration
+- Function expression
+- Arrow syntax
+
+```javascript
+// Function declaration uses the function keyword
+function myFunc() {}
+
+// The name can be omitted to create an anonymous function
+const a = function () {}
+const b = function myFuncTwo() {}
+
+// Arrow function syntax is shorter syntax for a function expression
+const c = () => {}
+```
+
+## Scopes
+
+A scope is a policy that manages the availability of variables. A variable defined inside a scope is accessible only within that scope and inaccessible outside it.
+
+The scope where a variable is located decides whether it is accessible from a particular part of the program.
+
+There are two types of scope:
+
+- Global scope
+- Block or local scope
+
+```javascript
+// Global variables are accessible from any part of the program
+const e = 2
+
+const square = () => {
+  return e * e
+}
+
+console.log(square()) // 4
+
+// Block or local scope refers to variables declared within a block
+const f = 5
+
+const times = () => {
+  const g = 5
+  return f * g
+}
+
+console.log(times()) // 25
+console.log(g) // ReferenceError: g is not defined
+```
+
+## Closure
+
+A closure is a function that has access to variables defined in the same local scope in which it was created. In other words, a closure gives you access to an outer function’s scope from an inner function.
+
+Let’s look at closures with three examples.
+
+```javascript
+// 1
+function extFunc() {
+  const extVar = "I used a closure"
+
+  function intFunc() {
+    console.log(extVar)
+  }
+
+  return intFunc
+}
+
+const closure = extFunc()
+closure() // "I used a closure"
+
+// 2
+const seconds = 60
+const text = "minutes is equal to"
+
+function timeConversion() {
+  const minutes = 2
+
+  return function minutesToSeconds() {
+    return `${minutes} ${text} ${seconds * minutes} seconds`
+  }
+}
+
+const convert = timeConversion()
+console.log(convert()) // "2 minutes is equal to 120 seconds"
+console.log(timeConversion()()) // "2 minutes is equal to 120 seconds"
+
+// 3
+function scores() {
+  const score = 85
+
+  function displayScore() {
+    alert(score)
+  }
+
+  displayScore()
+}
+
+scores()
+```
+
+In example 1, `extFunc()` creates a local variable named `extVar` and a function named `intFunc()`. The inner function has no local variables of its own, but inner functions have access to the variables of outer functions. This lets `intFunc()` access the variable declared in `extFunc()`.
+
+In example 2, the explicit `return intFunc` from example 1 is replaced by returning the inner function when it is declared.
+
+In example 3, the inner function is called immediately rather than returned.
+
+If we replace `alert` with `console.log`, the result is clearer:
+
+```javascript
+function scores() {
+  const score = 85
+
+  function displayScore() {
+    console.log(score)
+  }
+
+  displayScore()
+}
+
+const showScore = scores()
+console.log(showScore) // undefined
+```
+
+At first glance, it might seem unintuitive that a returned inner function can still access an outer function’s variables. In some programming languages, local variables exist only for the duration of a function’s execution. Once the outer function finishes, you might expect its local variables to become inaccessible.
+
+Functions in JavaScript form closures. A closure is the combination of a function and the lexical environment within which that function was declared. This environment contains the local variables that were in scope when the closure was created.
+
+When an inner function is returned, its instance maintains a reference to that lexical environment. The values it needs remain available when the function is invoked later.
+
+The JavaScript engine detects when a function needs data from its surrounding scope and preserves a link to that environment. A function with this memory of the environment where it was created is known as a closure.
+
+## How closures are handled in memory
+
+When a function that depends only on its own arguments and data is called, it is pushed onto the **call stack**, where it is executed and its data is kept until the call completes.
+
+When a function references data outside its own scope, such as data from its lexical environment, the runtime preserves the referenced values so they can be accessed later. These values remain reachable through the closure and are generally stored in **heap memory**.
+
+Unlike the short-lived call stack, heap memory can retain data until it is no longer reachable and can be garbage collected.
+
+Closures retain references and can therefore use more memory than functions that do not capture values, but they have many practical uses, including data encapsulation.
+
+Data encapsulation protects data and limits access to the places where it is needed.
+
+## Why the name closure?
+
+The inner function inspects its environment and closes over the variables in the lexical scope where it was defined—the variables it needs to remember for future use. Those references are kept in an internal data structure managed by the JavaScript runtime.
+
+[← Back to blog](/blog)
