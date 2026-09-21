@@ -2,6 +2,7 @@ import { useId } from "react";
 
 import Intro from "@/components/Intro";
 import NavBar from "@/components/NavBar";
+import { FlickeringGrid } from "@/components/ui/FlickeringGrid";
 import { cn } from "@/lib/utils";
 
 function Timeline() {
@@ -28,11 +29,15 @@ function FixedSidebar() {
   return (
     <div className="relative min-h-svh flex-none overflow-hidden px-6 lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex lg:min-h-0 lg:px-0">
       <div className="relative flex min-h-svh w-full lg:min-h-0 lg:pointer-events-auto lg:mr-[calc(max(2rem,50%-38rem)+40rem)] lg:min-w-lg lg:overflow-x-visible lg:overflow-y-auto lg:pl-[max(4rem,calc(50%-38rem))]">
-        <div className="mx-auto max-w-lg lg:mx-0 lg:flex lg:w-96 lg:max-w-none lg:flex-col lg:before:flex-1 lg:before:pt-6">
-          <div className="pt-12 pb-24 sm:pt-20 sm:pb-28 lg:py-20">
+        <div className="relative mx-auto max-w-lg lg:mx-0 lg:flex lg:w-96 lg:max-w-none lg:flex-col lg:before:flex-1 lg:before:pt-6">
+          <FlickeringGrid
+            aria-hidden="true"
+            className="absolute inset-0 overflow-hidden mask-x-from-75% mask-b-to-96%"
+          />
+          <div className="relative z-10 pt-12 pb-24 sm:pt-20 sm:pb-28 lg:py-20">
             <Intro />
           </div>
-          <div className="absolute inset-x-0 bottom-4 flex justify-center lg:static lg:flex lg:flex-1 lg:items-end lg:justify-start lg:pb-6">
+          <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center lg:static lg:flex lg:flex-1 lg:items-end lg:justify-start lg:pb-6">
             <NavBar />
           </div>
         </div>
