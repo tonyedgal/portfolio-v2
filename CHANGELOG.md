@@ -1,5 +1,11 @@
 # portfolio-v2
 
+## 0.1.2
+
+### Patch Changes
+
+- 38ee07f: Run the project deployment script after a release tag is created.
+
 ## 0.1.1
 
 ### Patch Changes
