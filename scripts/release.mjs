@@ -17,7 +17,7 @@ if (!publish.stdout.includes("New tag:")) {
   process.exit(0);
 }
 
-const deploy = spawnSync("pnpm", ["deploy"], {
+const deploy = spawnSync("pnpm", ["run", "deploy"], {
   env: process.env,
   stdio: "inherit",
 });
