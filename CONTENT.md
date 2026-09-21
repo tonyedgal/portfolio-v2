@@ -9,7 +9,7 @@ Edit the MDX files in `src/content`. Standard Markdown works for headings, parag
 - `blog.mdx`: blog index at `/blog`. Replace the empty state when a real article is ready. Add article routes under `src/app/blog/<slug>/page.tsx` importing their MDX, following the UI-Theme route example.
 - `story.mdx`: photo timeline at `/story`.
 
-Contact links live in `src/components/Intro.tsx`. The downloadable resume lives in `public/Tony-Resume-Fullstack.pdf`. Initial copy is adapted from the supplied resume; dates and metrics should be updated there and in the MDX when they change.
+Contact links live in `src/components/Intro.tsx`. The downloadable resume lives in `public/Tony-Resume-Frontend-Engineer.pdf`. Initial copy is adapted from the supplied resume; dates and metrics should be updated there and in the MDX when they change.
 
 ## Add a story photo
 

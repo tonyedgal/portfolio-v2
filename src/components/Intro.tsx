@@ -38,7 +38,7 @@ export default function Intro() {
           <a href="https://x.com/TonyEdgal" className="inline-flex min-h-11 items-center gap-2 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
             <TwitterIcon className="size-4" /> Twitter
           </a>
-          <a href="/Tony-Resume-Fullstack.pdf" className="inline-flex min-h-11 items-center gap-2 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
+          <a href="/Tony-Resume-Frontend-Engineer.pdf" className="inline-flex min-h-11 items-center gap-2 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
             <FileText className="size-4" aria-hidden="true" /> Résumé <ArrowUpRight size={15} aria-hidden="true" />
           </a>
         </div>
