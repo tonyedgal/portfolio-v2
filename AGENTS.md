@@ -104,7 +104,7 @@ Content rules:
 - `PRODUCT.md` defines the audience, purpose, navigation, and design constraints.
 - `CONTENT.md` is the editing guide for portfolio copy and MDX patterns.
 - Resume-derived claims must remain faithful to
-  `public/Tony-Resume-Fullstack.pdf`. Do not invent employers, dates, outcomes,
+  `public/Tony-Resume-Frontend-Engineer.pdf`. Do not invent employers, dates, outcomes,
   availability, projects, metrics, articles, or photographs.
 - Story photographs and their captions must come from the user. Store optimized
   assets under `public/story/` and render them with `StoryPhoto`.
