@@ -1,60 +1,12 @@
 import { ContentWrapper } from "@/components/PortfolioLayout";
 import { TimelineArticle } from "@/components/TimelineArticle";
+import Image from "next/image";
 
 <ContentWrapper className="typography">
 
 # Experience
 
 Building production applications across frontend architecture, design systems, product UI, and fullstack development.
-
-</ContentWrapper>
-
-<TimelineArticle id="rigr-ai" date="May 2022 – Present">
-
-## RIGR AI
-
-**Design Engineer / Fullstack Sales Engineer**<br />
-Cork, Ireland
-
-I own design and frontend engineering across ARICA, VST, Tailli, and Macha EST, taking product work from interface design and interaction flows through implementation, testing, review, and release.
-
-- Own the majority of ARICA’s frontend development, accounting for **more than 75% of repository commits** and reviewing more than 95% of pull requests and code changes from November 2023 to present.
-- Shipped ARICA as a media-enabled investigative platform after collecting feedback from law-enforcement agencies. ARICA is used by **51 law-enforcement organisations across 30 countries**.
-- **Led ARICA’s authentication migration from Azure AD B2C to Keycloak**, implementing OIDC and RBAC, supporting backend changes, and building Python migration tooling that preserved existing user access.
-- Led a full VST interface redesign and established a reusable design system, then migrated its React frontend from Create React App to Vite within its monorepo.
-- Reduced VST’s initial media-catalogue load time from approximately **9 seconds to 3 seconds**, reducing its response from 9.7 MB to 176 KB and incremental search responses to approximately 2.7 KB per keystroke.
-- Built fullstack features across ARICA and VST for transcription, OCR, summarisation, diarisation, face recognition, and other video-analysis workflows.
-- Integrated Tailli’s offline licensing into VST and designed activation flows for secure, air-gapped environments. Designed interfaces for Macha EST, an Electron application for encrypted evidence workflows.
-- Automated linting, formatting, pre-commit checks, testing, Playwright workflows, Changeset releases, tagging, and release notes. Reduced recurring CI failures from approximately every other release cycle to zero.
-- Led webinars, demonstrations, technical sales calls, pilots, onboarding, and deployments.
-
-</TimelineArticle>
-
-<TimelineArticle id="betterchalk" date="March – April 2022">
-
-## Betterchalk
-
-**Fullstack Web Developer Intern**  
-Pennsylvania, USA
-
-- Developed product features and curated courses for the platform in preparation for release.
-- Refactored application areas to **strongly typed TypeScript**, improving type safety and maintainability.
-
-</TimelineArticle>
-
-<TimelineArticle id="muzzlab" date="March 2019 – December 2020">
-
-## Muzzlab
-
-**Frontend Developer**<br />
-Lagos, Nigeria
-
-- Built Biko.ng, an ecommerce platform that later received a **$5,000 Tony Elumelu Foundation grant**.
-- Developed product interfaces, integrated frontend features with backend services, and supported the platform through its early growth.
-
-</TimelineArticle>
-
-<ContentWrapper className="typography">
 
 ## Tools and technologies
 
@@ -65,6 +17,58 @@ Lagos, Nigeria
 **Testing and quality:** Vitest, Jest, React Testing Library, Playwright, MSW, and CI/CD.
 
 **Architecture and infrastructure:** Design systems, component libraries, responsive UI, Figma, Azure, Keycloak, OAuth, OIDC, Docker, Git, and Turborepo.
+
+</ContentWrapper>
+
+<TimelineArticle id="rigr-ai" date="May 2022 – Present">
+
+<Image src="/rigr-logo.png" alt="RIGR AI logo" width={360} height={361} className="mb-6 h-16 w-auto rounded-none object-contain" />
+
+## RIGR AI
+
+**Design Engineer / Fullstack Sales Engineer**<br />
+Cork, Ireland
+
+### Products
+
+- **ARICA:** Media-enabled investigative platform for transcription, OCR, summarisation, diarisation, face recognition, and video analysis.
+- **VST:** Media catalogue and video-analysis application with a reusable design system and faster search and loading.
+- **Tailli:** Offline licensing and activation platform for secure, air-gapped deployments.
+- **Macha EST:** Desktop application for encrypted evidence workflows.
+
+</TimelineArticle>
+
+<TimelineArticle id="betterchalk" date="March – April 2022">
+
+<Image src="/Betterchalk-logo.png" alt="Betterchalk logo" width={512} height={512} className="mb-6 h-14 w-auto rounded-none object-contain" />
+
+## Betterchalk
+
+**Fullstack Web Developer Intern**  
+Pennsylvania, USA
+
+### Product
+
+- **Betterchalk:** Learning platform for publishing and completing online courses.
+
+</TimelineArticle>
+
+<TimelineArticle id="muzzlab" date="March 2019 – December 2020">
+
+<Image src="/muzzlab_logo.webp" alt="Muzzlab Technologies logo" width={200} height={200} className="mb-6 h-20 w-auto rounded-none object-contain invert dark:invert-0" />
+
+## Muzzlab
+
+**Frontend Developer**<br />
+Lagos, Nigeria
+
+### Product
+
+- **Biko.ng:** Ecommerce platform for shopping and order management.
+
+</TimelineArticle>
+
+<ContentWrapper className="typography">
 
 ## Education
 
