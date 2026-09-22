@@ -1,5 +1,11 @@
 # portfolio-v2
 
+## 0.1.3
+
+### Patch Changes
+
+- 6ba3bea: Simplify the Experience page with company logos, a top-level tools section, and concise product lists.
+
 ## 0.1.2
 
 ### Patch Changes
