@@ -65,7 +65,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={cn(
-        "h-full",
+        "h-full max-lg:motion-safe:scroll-smooth motion-reduce:scroll-auto",
         geistMono.variable,
         manrope.variable,
         notoSans.variable,
@@ -76,9 +76,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        data-scroll-behavior="smooth"
         className={cn(
-          "flex min-h-full flex-col scroll-smooth bg-background antialiased text-foreground",
+          "flex min-h-full flex-col bg-background antialiased text-foreground",
           "font-sans",
           "selection:bg-accent selection:text-accent-foreground",
         )}
