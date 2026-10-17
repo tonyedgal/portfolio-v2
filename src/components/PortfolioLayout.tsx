@@ -37,7 +37,7 @@ function FixedSidebar() {
           <div className="relative z-10 pt-12 pb-24 sm:pt-20 sm:pb-28 lg:py-20">
             <Intro />
           </div>
-          <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center lg:static lg:flex lg:flex-1 lg:items-end lg:justify-start lg:pb-6">
+          <div className="inset-x-0 z-10 flex justify-center max-lg:fixed max-lg:bottom-0 max-lg:z-50 max-lg:h-[var(--mobile-nav-height)] max-lg:items-center max-lg:bg-background/95 max-lg:pb-[env(safe-area-inset-bottom)] max-lg:backdrop-blur-md lg:static lg:flex lg:flex-1 lg:items-end lg:justify-start lg:pb-6">
             <NavBar />
           </div>
         </div>
@@ -71,7 +71,7 @@ export function PortfolioLayout({ children }: { children: React.ReactNode }) {
       <FixedSidebar />
       <div className="relative flex-auto">
         <Timeline />
-        <main id="content" tabIndex={-1} className="space-y-20 pt-6 pb-20 focus:outline-none sm:space-y-32 sm:pt-10 sm:pb-32 lg:py-20 xl:py-32">
+        <main id="content" tabIndex={-1} className="min-h-svh space-y-20 pt-6 pb-[calc(var(--mobile-nav-height)+2rem)] focus:outline-none sm:space-y-32 sm:pt-10 lg:min-h-0 lg:py-20 xl:py-32">
           {children}
         </main>
       </div>
