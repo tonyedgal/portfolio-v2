@@ -1,0 +1,83 @@
+import Image from "next/image"
+import tailwindWebsite from "../../../public/blog/diagonal-background-pattern-with-tailwindcss/tailwind-website.webp"
+import profileCard from "../../../public/blog/diagonal-background-pattern-with-tailwindcss/profile-card.webp"
+
+# Diagonal Background Pattern with TailwindCSS
+
+October 18, 2025 · [Originally published on DEV](https://dev.to/tonyedgal/diagonal-background-pattern-with-tailwindcss-4i5k)
+
+Background patterns are a recent trend in web design, and most can be replicated with only CSS. In this article, I will teach you how to replicate the diagonal background pattern on the Tailwind CSS website using only Tailwind CSS.
+
+<Image src={tailwindWebsite} alt="Music card on a dark diagonal striped background" sizes="(min-width: 1024px) 576px, 100vw" />
+
+## What we will be building
+
+<Image src={profileCard} alt="Profile card with diagonal stripes across its header" sizes="(min-width: 1024px) 576px, 100vw" />
+
+We will build this simple card component using the background pattern on the card header. The card is a custom shadcn card with extended styles. I will only focus on the background pattern on the card header, and not the card layout or content.
+
+
+### Tailwind CSS
+```css
+globals.css
+
+:root {
+  --border: oklch(0.9219 0 0);
+}
+
+.diagonal-bg {
+  @apply bg-[image:repeating-linear-gradient(315deg,var(--border)_0,var(--border)_1px,transparent_1px,transparent_50%) bg-[size:8px_8px];
+}
+```
+
+### Card Component
+```tsx
+/** Card.tsx */
+
+function Card() {
+
+  return (
+    <Card>
+      <CardHeader className="py-4 diagonal-bg">
+        <CardTitle>User Details</CardTitle>
+      </CardHeader>
+      <CardContent>
+       {/** card content */}
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+### Explanation
+
+#### Gradient
+
+315° points top-left. Using repeating-linear-gradient(315deg, …) lays stripes along that diagonal.
+The pattern then repeats infinitely along the gradient axis for a subtle diagonal texture.
+
+#### Colored stripe (var(--border))
+
+In this example, I am using a `--border` variable.
+var(--border) 0 starts the colored stop at the very beginning of the pattern.
+var(--border) 1px holds that color until 1px, creating a crisp 1px line.
+var(--border) is a CSS variable for colour.
+
+#### Transparent gap
+
+transparent 1px turns the colour off right after the 1px line.
+transparent 50% keeps it transparent until halfway through the repeat segment, so each unit is “1px line + clear space.”
+
+#### Tile size & repeat
+
+background-size: 8px 8px sets each repeating tile to 8×8px.
+With a 1px line in each tile, the repeats intersect to form a fine diagonal grid/checker texture.
+
+### Conclusion
+
+One thing to note is that more often than not, background patterns in Tailwind CSS can be very verbose. I encourage you to move the CSS code to an `@apply` Tailwind block in an external file, or, as we will see in other examples in this series, you can keep the code within the component, depending on your preferred React pattern.
+
+What other background pattern do you want me to cover?
+
+
+[← Back to blog](/blog)
