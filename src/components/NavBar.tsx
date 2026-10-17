@@ -20,7 +20,7 @@ export default function NavBar() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <div className="mx-auto w-max shrink-0 rounded-xs border border-border bg-transparent p-1 shadow-sm backdrop-blur-md">
+    <div className="mx-auto w-max max-w-full rounded-xs border border-border bg-transparent p-1 shadow-sm backdrop-blur-md">
       <nav
         aria-label="Main navigation"
         className="relative flex items-center justify-between"
@@ -40,7 +40,7 @@ export default function NavBar() {
             className="size-8 max-w-none rounded-full"
           />
         </Link>
-        <div className="flex items-center">
+        <div className="flex min-w-0 items-center">
           {portfolioSections.map((item) => {
             const active = activePath === item.path;
 
@@ -50,7 +50,7 @@ export default function NavBar() {
                 href={`${item.path}#content`}
                 transitionTypes={navigationTypes(pathname, item.path)}
                 aria-current={active ? "page" : undefined}
-                className={`relative isolate shrink-0 rounded-none px-2 py-3 text-[0.6875rem] leading-[14px] text-muted-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:px-5 sm:text-xs ${
+                className={`relative isolate flex min-w-0 items-center justify-center whitespace-nowrap rounded-none px-2 py-3 text-[0.6875rem] leading-[14px] text-muted-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:before:w-3 sm:before:shrink sm:before:content-[''] sm:after:w-3 sm:after:shrink sm:after:content-[''] sm:text-xs ${
                   active ? "font-semibold" : ""
                 }`}
                 onMouseEnter={() => setHoveredPath(item.path)}
