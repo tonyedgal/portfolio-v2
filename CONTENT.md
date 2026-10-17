@@ -6,10 +6,20 @@ Edit the MDX files in `src/content`. Standard Markdown works for headings, parag
 - `experience.mdx`: work history, skills, education; default route `/`.
 - `projects.mdx`: project index at `/projects`.
 - `ui-theme.mdx`: current project detail at `/projects/ui-theme`.
-- `blog.mdx`: blog index at `/blog`. Replace the empty state when a real article is ready. Add article routes under `src/app/blog/<slug>/page.tsx` importing their MDX, following the UI-Theme route example.
+- `spaceman-react-theme-animation.mdx` and `spaceman-skills.mdx`: project details.
+- `blog.mdx`: dated blog index at `/blog`. Add article routes under `src/app/blog/<slug>/page.tsx` importing their MDX, following the existing article routes.
 - `story.mdx`: photo timeline at `/story`.
 
 Contact links live in `src/components/Intro.tsx`. The downloadable resume lives in `public/Tony-Resume-Frontend-Engineer.pdf`. Initial copy is adapted from the supplied resume; dates and metrics should be updated there and in the MDX when they change.
+
+Project actions use `ProjectLinks` with an internal `about` URL on the index, a
+`website` URL, and a GitHub `repository` in `owner/name` format. GitHub star counts
+load through TanStack Query within the projects layout. Counts cache for five
+minutes; failed requests show an unavailable label while keeping the link usable.
+
+The diagonal background article uses local WebP images in
+`public/blog/diagonal-background-pattern-with-tailwindcss`. Its text comes from
+the supplied Markdown, and its October 18, 2025 publication date comes from DEV.
 
 ## Add a story photo
 
