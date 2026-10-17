@@ -1,20 +1,18 @@
 "use client";
 
-import * as React from "react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { ThemeProvider as SpacemanThemeProvider } from "@space-man/react-theme-animation";
+import { usePathname } from "next/navigation";
 
-export function ThemeProvider({
-  children,
-  ...props
-}: React.ComponentProps<typeof NextThemesProvider>) {
+import { sectionForPath } from "@/lib/portfolio-sections";
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const palette = sectionForPath(usePathname()).palette;
+
   return (
-    <NextThemesProvider
-      {...props}
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-    >
-      {children}
-    </NextThemesProvider>
+    <SpacemanThemeProvider defaultTheme="dark" duration={250}>
+      <div className="contents" data-portfolio-theme={palette}>
+        {children}
+      </div>
+    </SpacemanThemeProvider>
   );
 }
