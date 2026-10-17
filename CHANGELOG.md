@@ -1,5 +1,11 @@
 # portfolio-v2
 
+## 0.1.5
+
+### Patch Changes
+
+- d54b994: Add Spaceman Skills and consistent project links with live GitHub star counts. Import the diagonal Tailwind background article with local WebP images.
+
 ## 0.1.4
 
 ### Patch Changes
