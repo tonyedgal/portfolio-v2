@@ -40,6 +40,22 @@ export const socialCards = {
     description:
       "Writing about JavaScript, React, and the patterns that make software easier to understand.",
   },
+  spacemanSkills: {
+    label: "Project",
+    title: "Spaceman Skills",
+    description: "Small, composable skills for coding agents and repeatable development workflows.",
+  },
+  spacemanTheme: {
+    label: "Project",
+    title: "Spaceman React Theme Animation",
+    description: "Animated theme transitions for React applications.",
+  },
+  diagonalPattern: {
+    label: "Article",
+    title: "Diagonal Background Pattern with TailwindCSS",
+    description: "Build a diagonal background pattern with Tailwind CSS and a repeating linear gradient.",
+    date: "October 18, 2025",
+  },
   imperativeHandle: {
     label: "Article",
     title: "Clean React code with useImperativeHandle",
