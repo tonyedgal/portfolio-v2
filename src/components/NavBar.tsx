@@ -1,25 +1,21 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import {
+  navigationTypes,
+  portfolioSections,
+  sectionForPath,
+} from "@/lib/portfolio-sections";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
-
-const navItems = [
-  { name: "Experience", path: "/" },
-  { name: "Projects", path: "/projects" },
-  { name: "Blog", path: "/blog" },
-  { name: "Story", path: "/story" },
-];
 
 export default function NavBar() {
   const pathname = usePathname();
-  const activePath = navItems.find((item) =>
-    item.path === "/" ? pathname === "/" : pathname.startsWith(item.path),
-  )?.path;
+  const activePath = sectionForPath(pathname).path;
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
 
@@ -32,6 +28,7 @@ export default function NavBar() {
       >
         <Link
           href="/"
+          transitionTypes={navigationTypes(pathname, "/")}
           aria-label="Tony Edgal — Experience"
           className="shrink-0 px-1"
         >
@@ -44,15 +41,16 @@ export default function NavBar() {
           />
         </Link>
         <div className="flex items-center">
-          {navItems.map((item) => {
+          {portfolioSections.map((item) => {
             const active = activePath === item.path;
 
             return (
               <Link
                 key={item.path}
                 href={`${item.path}#content`}
+                transitionTypes={navigationTypes(pathname, item.path)}
                 aria-current={active ? "page" : undefined}
-                className={`relative isolate shrink-0 rounded-none px-2 py-3 text-[0.6875rem] leading-[14px] text-muted-foreground no-underline duration-300 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:px-5 sm:text-xs ${
+                className={`relative isolate shrink-0 rounded-none px-2 py-3 text-[0.6875rem] leading-[14px] text-muted-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:px-5 sm:text-xs ${
                   active ? "font-semibold" : ""
                 }`}
                 onMouseEnter={() => setHoveredPath(item.path)}
@@ -66,8 +64,6 @@ export default function NavBar() {
                     aria-hidden="true"
                     transition={{
                       bounce: 0,
-                      stiffness: 100,
-                      damping: 10,
                       duration: reduceMotion ? 0 : 0.3,
                     }}
                   />
@@ -78,7 +74,7 @@ export default function NavBar() {
                     className="absolute right-0 bottom-[-6px] left-0 flex w-full items-center justify-center px-2"
                     layoutId="navbar-active"
                     aria-hidden="true"
-                    transition={{ duration: reduceMotion ? 0 : 0.5 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.3 }}
                   >
                     <span className="h-[2px] w-full border border-accent bg-accent" />
                   </motion.span>

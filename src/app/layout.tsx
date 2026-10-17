@@ -1,21 +1,52 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Manrope, Noto_Sans, Geist_Mono } from "next/font/google";
+import {
+  DM_Sans,
+  Geist_Mono,
+  Manrope,
+  Merriweather,
+  Noto_Sans,
+  Oxanium,
+} from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { PortfolioLayout } from "@/components/PortfolioLayout";
 import { cn } from "@/lib/utils";
 import { siteUrl } from "@/lib/site-metadata";
 
-const manropeHeading = Manrope({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-heading",
+  variable: "--type-geist-mono",
+  display: "swap",
 });
 
-const notoSans = Noto_Sans({ subsets: ["latin"], variable: "--font-sans" });
-
-const fontMono = Geist_Mono({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--type-manrope",
+  display: "swap",
+});
+
+const notoSans = Noto_Sans({
+  subsets: ["latin"],
+  variable: "--type-noto-sans",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--type-dm-sans",
+  display: "swap",
+});
+
+const oxanium = Oxanium({
+  subsets: ["latin"],
+  variable: "--type-oxanium",
+  display: "swap",
+});
+
+const merriweather = Merriweather({
+  subsets: ["latin"],
+  variable: "--type-merriweather",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -31,24 +62,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={cn(
+        "h-full",
+        geistMono.variable,
+        manrope.variable,
+        notoSans.variable,
+        dmSans.variable,
+        oxanium.variable,
+        merriweather.variable,
+      )}
+      suppressHydrationWarning
+    >
       <body
         data-scroll-behavior="smooth"
         className={cn(
           "flex min-h-full flex-col scroll-smooth bg-background antialiased text-foreground",
-          fontMono.variable,
           "font-sans",
-          notoSans.variable,
-          manropeHeading.variable,
           "selection:bg-accent selection:text-accent-foreground",
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider>
           <a
             className="fixed top-4 left-4 z-100 -translate-y-[200%] bg-background px-4 py-3 text-foreground focus:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
             href="#content"
