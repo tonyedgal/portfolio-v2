@@ -12,7 +12,12 @@ if (publish.status !== 0) {
   process.exit(publish.status ?? 1);
 }
 
-if (!publish.stdout.includes("New tag:")) {
+// changesets 3 reports created tags under a different heading
+const tagCreated =
+  publish.stdout.includes("New tag:") ||
+  publish.stdout.includes("Created git tags:");
+
+if (!tagCreated) {
   console.log("No new release tag was created; skipping deployment.");
   process.exit(0);
 }
