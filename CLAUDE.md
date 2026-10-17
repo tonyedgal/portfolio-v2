@@ -64,9 +64,15 @@ The responsive layout uses a split sidebar and content structure:
 
 - At `lg` and above, `FixedSidebar` is fixed on the left, content occupies the
   right column, and timeline dates sit beside the dividing line.
-- Below `lg`, the introduction is centered in normal flow and the navbar sits at
-  the bottom of its `100svh` section, immediately above the MDX content.
+- Below `lg`, the navbar stays fixed at the bottom while the introduction and
+  MDX content scroll. Reserve `--mobile-nav-height` plus reading space below the
+  content so final lines and links can scroll clear of the navbar. Include the
+  bottom safe area. Short sections retain at least one viewport of height.
+  Mobile anchors scroll smoothly unless reduced motion is requested. Desktop
+  intro spacing and sidebar centering must stay unchanged.
 - The navbar is centered relative to the fixed sidebar, not the viewport.
+  Bound its width to the available column. Tab gutters shrink with flexbox
+  when theme fonts need more room; preserve readable labels and fixed controls.
 - Keep the spaceman avatar visible in the mobile navbar.
 - Preserve keyboard focus states, the skip link, semantic landmarks, descriptive
   image alternatives, and reduced-motion behaviour.
