@@ -150,3 +150,18 @@ The Car Platform guides supply behavioural principles only. Do not copy their
 vehicle architecture, deployment assumptions, or verification claims here. The
 Spaceman package and framework examples are read-only references for this task.
 Changes to guide files do not install hooks or establish passing CI.
+
+## Analytics and search metadata
+
+`src/instrumentation-client.ts` initializes PostHog once. Tracking runs only in
+production on `tony.spaceman.sh`, using shared PostHog project `321708`.
+Filter reports by `$host` to view each site separately. History changes capture
+pageviews across all routes, including browser back/forward navigation.
+`src/components/posthog-provider.tsx` exposes that same client to React.
+Do not initialize a second client or add manual pageview captures. Local and
+Worker preview hosts do not initialize PostHog.
+
+`src/lib/site-metadata.ts` defines each published page's path and social metadata.
+The sitemap uses those paths. Keep this list aligned with published routes.
+The root layout supplies Person and WebSite structured data from existing
+profile links. Google chooses whether to show sitelinks.

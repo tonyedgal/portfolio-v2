@@ -8,6 +8,7 @@ import {
   Noto_Sans,
   Oxanium,
 } from "next/font/google";
+import { AnalyticsProvider } from "@/components/posthog-provider";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { PortfolioLayout } from "@/components/PortfolioLayout";
 import { cn } from "@/lib/utils";
@@ -52,6 +53,8 @@ const merriweather = Merriweather({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "Experience · Tony Edgal", template: "%s · Tony Edgal" },
+  authors: [{ name: "Tony Edgal", url: siteUrl }],
+  creator: "Tony Edgal",
   description:
     "Tony Edgal is a Frontend, Design, and Fullstack Engineer building web and desktop applications with TypeScript, React, and Next.js.",
 };
@@ -82,15 +85,45 @@ export default function RootLayout({
           "selection:bg-accent selection:text-accent-foreground",
         )}
       >
-        <ThemeProvider>
-          <a
-            className="fixed top-4 left-4 z-100 -translate-y-[200%] bg-background px-4 py-3 text-foreground focus:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
-            href="#content"
-          >
-            Skip to content
-          </a>
-          <PortfolioLayout>{children}</PortfolioLayout>
-        </ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Person",
+                  "@id": `${siteUrl}/#person`,
+                  name: "Tony Edgal",
+                  url: siteUrl,
+                  sameAs: [
+                    "https://github.com/tonyedgal",
+                    "https://www.linkedin.com/in/anthony-edgal-8ba13715b/",
+                    "https://x.com/TonyEdgal",
+                  ],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${siteUrl}/#website`,
+                  name: "Tony Edgal",
+                  url: siteUrl,
+                  author: { "@id": `${siteUrl}/#person` },
+                },
+              ],
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
+        <AnalyticsProvider>
+          <ThemeProvider>
+            <a
+              className="fixed top-4 left-4 z-100 -translate-y-[200%] bg-background px-4 py-3 text-foreground focus:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+              href="#content"
+            >
+              Skip to content
+            </a>
+            <PortfolioLayout>{children}</PortfolioLayout>
+          </ThemeProvider>
+        </AnalyticsProvider>
       </body>
     </html>
   );
