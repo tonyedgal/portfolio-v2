@@ -53,3 +53,24 @@ pull request to publish the GitHub release and deploy the Worker.
 
 No Cloudflare credentials need to be entered again. GitHub supplies the stored
 account ID and API token to Wrangler on every preview and production run.
+
+## PostHog configuration
+
+The GitHub Actions repository variables use PostHog project `321708`
+(`Default project`), shared with `spaceman.sh`:
+
+- `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN`: the shared PostHog project's public token.
+- `NEXT_PUBLIC_POSTHOG_HOST`: that project's ingestion host.
+
+Add the same values to the ignored `.env.production.local` for local production
+builds. The release workflow injects them at build time. Preview builds omit
+these values, and the browser also requires the exact production hostname.
+
+After deployment, visit `https://tony.spaceman.sh` and navigate between pages.
+Verify pageviews in PostHog Activity with `$host` set to `tony.spaceman.sh`,
+then check Web Analytics with the same domain filter. A local build does not
+confirm production ingestion.
+
+The sitemap is available at `https://tony.spaceman.sh/sitemap.xml`. Submit it
+in the verified Google Search Console property after deployment. Search Console
+verification and Google indexing are separate from the code setup.
