@@ -7,12 +7,13 @@ import {
   TwitterIcon,
 } from "@/components/icons/SocialIcons";
 import IntroContent from "@/content/intro.mdx";
+import spaceman from "../../public/Spaceman.webp";
 
 export default function Intro() {
   return (
     <section aria-label="About Tony">
         <Image
-          src="/Spaceman.webp"
+          src={spaceman}
           alt="Spaceman, Tony’s avatar"
           width={64}
           height={64}

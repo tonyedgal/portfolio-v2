@@ -12,6 +12,7 @@ import {
   sectionForPath,
 } from "@/lib/portfolio-sections";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import spaceman from "../../public/Spaceman.webp";
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -33,7 +34,7 @@ export default function NavBar() {
           className="shrink-0 px-1"
         >
           <Image
-            src="/Spaceman.webp"
+            src={spaceman}
             alt=""
             height={32}
             width={32}
