@@ -36,18 +36,21 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--type-dm-sans",
   display: "swap",
+  preload: false,
 });
 
 const oxanium = Oxanium({
   subsets: ["latin"],
   variable: "--type-oxanium",
   display: "swap",
+  preload: false,
 });
 
 const merriweather = Merriweather({
   subsets: ["latin"],
   variable: "--type-merriweather",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
