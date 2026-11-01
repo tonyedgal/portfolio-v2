@@ -1,5 +1,11 @@
 # portfolio-v2
 
+## 0.1.7
+
+### Patch Changes
+
+- 621f749: Improve PageSpeed results. Restore the home page title, load the first company logo early at its intended size, cache optimized images, defer the intro grid animation and PostHog until the page is idle, skip preloading fonts for other themes, and send HSTS, frame, and opener security headers.
+
 ## 0.1.6
 
 ### Patch Changes
