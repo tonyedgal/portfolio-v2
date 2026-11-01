@@ -15,6 +15,8 @@ type FlickeringGridProps = Omit<
   maxOpacity?: number;
 };
 
+const frameInterval = 1000 / 12;
+
 export function FlickeringGrid({
   squareSize = 3,
   gridGap = 7,
@@ -30,7 +32,7 @@ export function FlickeringGrid({
   const resolveColor = useCallback(() => {
     const container = containerRef.current;
 
-    if (!container) return "rgba(0, 0, 0,";
+    if (!container) return "rgb(0, 0, 0)";
 
     const sample = document.createElement("span");
     sample.style.color = color;
@@ -43,13 +45,13 @@ export function FlickeringGrid({
     colorCanvas.height = 1;
     const colorContext = colorCanvas.getContext("2d");
 
-    if (!colorContext) return "rgba(0, 0, 0,";
+    if (!colorContext) return "rgb(0, 0, 0)";
 
     colorContext.fillStyle = resolvedColor;
     colorContext.fillRect(0, 0, 1, 1);
     const [red, green, blue] = colorContext.getImageData(0, 0, 1, 1).data;
 
-    return `rgba(${red}, ${green}, ${blue},`;
+    return `rgb(${red}, ${green}, ${blue})`;
   }, [color]);
 
   useEffect(() => {
@@ -63,20 +65,22 @@ export function FlickeringGrid({
       "(prefers-reduced-motion: reduce)",
     ).matches;
     let frameId = 0;
+    let cancelStart = () => {};
     let isVisible = true;
     let lastTime = 0;
     let columns = 0;
     let rows = 0;
     let opacities = new Float32Array();
-    let rgba = resolveColor();
+    let rgb = "";
 
     const draw = () => {
       const dpr = window.devicePixelRatio || 1;
       context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = rgb;
 
       for (let column = 0; column < columns; column += 1) {
         for (let row = 0; row < rows; row += 1) {
-          context.fillStyle = `${rgba}${opacities[column * rows + row]})`;
+          context.globalAlpha = opacities[column * rows + row];
           context.fillRect(
             column * (squareSize + gridGap) * dpr,
             row * (squareSize + gridGap) * dpr,
@@ -102,12 +106,18 @@ export function FlickeringGrid({
         { length: columns * rows },
         () => Math.random() * maxOpacity,
       );
-      rgba = resolveColor();
+      rgb = resolveColor();
       draw();
     };
 
     const animate = (time: number) => {
       if (!isVisible) return;
+
+      // the flicker is random and slow, so a low frame rate looks the same
+      if (time - lastTime < frameInterval) {
+        frameId = requestAnimationFrame(animate);
+        return;
+      }
 
       const deltaTime = (time - lastTime) / 1000;
       lastTime = time;
@@ -133,15 +143,23 @@ export function FlickeringGrid({
       }
     });
 
-    resize();
-    resizeObserver.observe(container);
-    intersectionObserver.observe(canvas);
+    const start = () => {
+      resize();
+      resizeObserver.observe(container);
+      intersectionObserver.observe(canvas);
+    };
 
-    if (!reducedMotion) {
-      frameId = requestAnimationFrame(animate);
+    // keep canvas setup off the critical path during hydration
+    if (typeof requestIdleCallback === "function") {
+      const idleId = requestIdleCallback(start, { timeout: 2000 });
+      cancelStart = () => cancelIdleCallback(idleId);
+    } else {
+      const timeoutId = setTimeout(start, 200);
+      cancelStart = () => clearTimeout(timeoutId);
     }
 
     return () => {
+      cancelStart();
       cancelAnimationFrame(frameId);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
