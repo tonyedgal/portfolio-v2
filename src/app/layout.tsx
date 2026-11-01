@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   DM_Sans,
   Geist_Mono,
@@ -62,6 +62,10 @@ export const metadata: Metadata = {
     "Tony Edgal is a Frontend, Design, and Fullstack Engineer building web and desktop applications with TypeScript, React, and Next.js.",
 };
 
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -84,6 +88,7 @@ export default function RootLayout({
       <body
         className={cn(
           "flex min-h-full flex-col bg-background antialiased text-foreground",
+          "pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)]",
           "font-sans",
           "selection:bg-accent selection:text-accent-foreground",
         )}
