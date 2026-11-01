@@ -91,7 +91,8 @@ export const socialCards = {
 
 export function createPageMetadata(card: SocialCard): Metadata {
   return {
-    title: card.label === "Portfolio" ? undefined : card.title,
+    // an explicit undefined title drops the layout default from the html
+    ...(card.label === "Portfolio" ? {} : { title: card.title }),
     description: card.description,
     alternates: { canonical: card.path },
     openGraph: {
