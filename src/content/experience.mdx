@@ -1,6 +1,9 @@
 import { ContentWrapper } from "@/components/PortfolioLayout";
 import { TimelineArticle } from "@/components/TimelineArticle";
 import Image from "next/image";
+import betterchalkLogo from "../../public/Betterchalk-logo.png";
+import muzzlabLogo from "../../public/muzzlab_logo.webp";
+import rigrLogo from "../../public/rigr-logo.png";
 
 <ContentWrapper className="typography">
 
@@ -22,7 +25,7 @@ Building production applications across frontend architecture, design systems, p
 
 <TimelineArticle id="rigr-ai" date="May 2022 – Present">
 
-<Image src="/rigr-logo.png" alt="RIGR AI logo" width={360} height={361} className="mb-6 h-16 w-auto rounded-none object-contain" />
+<Image src={rigrLogo} alt="RIGR AI logo" loading="eager" fetchPriority="high" className="mb-6 h-16! w-auto rounded-none object-contain" />
 
 ## RIGR AI
 
@@ -40,7 +43,7 @@ Cork, Ireland
 
 <TimelineArticle id="betterchalk" date="March – April 2022">
 
-<Image src="/Betterchalk-logo.png" alt="Betterchalk logo" width={512} height={512} className="mb-6 h-14 w-auto rounded-none object-contain" />
+<Image src={betterchalkLogo} alt="Betterchalk logo" className="mb-6 h-14! w-auto rounded-none object-contain" />
 
 ## Betterchalk
 
@@ -55,7 +58,7 @@ Pennsylvania, USA
 
 <TimelineArticle id="muzzlab" date="March 2019 – December 2020">
 
-<Image src="/muzzlab_logo.webp" alt="Muzzlab Technologies logo" width={200} height={200} className="mb-6 h-20 w-auto rounded-none object-contain invert dark:invert-0" />
+<Image src={muzzlabLogo} alt="Muzzlab Technologies logo" className="mb-6 h-20! w-auto rounded-none object-contain invert dark:invert-0" />
 
 ## Muzzlab
 
