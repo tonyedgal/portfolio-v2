@@ -506,9 +506,24 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
+  }
+  a,
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+  nav a,
+  button {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
 }
 
@@ -560,6 +575,18 @@
 
 ::view-transition {
   pointer-events: none;
+}
+
+/* keep the fixed mobile navbar above the sliding page and fully opaque */
+::view-transition-group(mobile-nav) {
+  z-index: 1;
+}
+::view-transition-old(mobile-nav) {
+  display: none;
+}
+::view-transition-new(mobile-nav) {
+  animation: none;
+  background: var(--background);
 }
 
 @media (prefers-reduced-motion: reduce) {

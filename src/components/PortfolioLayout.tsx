@@ -37,7 +37,7 @@ function FixedSidebar() {
           <div className="relative z-10 pt-12 pb-24 sm:pt-20 sm:pb-28 lg:py-20">
             <Intro />
           </div>
-          <div className="inset-x-0 z-10 flex justify-center max-lg:fixed max-lg:bottom-0 max-lg:z-50 max-lg:h-[var(--mobile-nav-height)] max-lg:items-center max-lg:bg-background/95 max-lg:pb-[env(safe-area-inset-bottom)] max-lg:backdrop-blur-md lg:static lg:flex lg:flex-1 lg:items-end lg:justify-start lg:pb-6">
+          <div className="inset-x-0 z-10 flex justify-center max-lg:fixed max-lg:bottom-0 max-lg:z-50 max-lg:h-[var(--mobile-nav-height)] max-lg:items-center max-lg:bg-background/95 max-lg:pb-[env(safe-area-inset-bottom)] max-lg:backdrop-blur-md max-lg:[view-transition-name:mobile-nav] lg:static lg:flex lg:flex-1 lg:items-end lg:justify-start lg:pb-6">
             <NavBar />
           </div>
         </div>
