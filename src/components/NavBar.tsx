@@ -14,6 +14,11 @@ import {
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import spaceman from "../../public/Spaceman.webp";
 
+// a click during a running slide would otherwise wait for it, so fast clicks replay late
+function skipRunningTransition() {
+  document.activeViewTransition?.skipTransition();
+}
+
 export default function NavBar() {
   const pathname = usePathname();
   const activePath = sectionForPath(pathname).path;
@@ -30,6 +35,7 @@ export default function NavBar() {
         <Link
           href="/"
           transitionTypes={navigationTypes(pathname, "/")}
+          onClick={skipRunningTransition}
           aria-label="Tony Edgal — Experience"
           className="shrink-0 px-1"
         >
@@ -50,11 +56,15 @@ export default function NavBar() {
                 key={item.path}
                 href={`${item.path}#content`}
                 transitionTypes={navigationTypes(pathname, item.path)}
+                onClick={skipRunningTransition}
                 aria-current={active ? "page" : undefined}
-                className={`relative isolate flex min-w-0 items-center justify-center whitespace-nowrap rounded-none px-2 py-3 text-[0.6875rem] leading-[14px] text-muted-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:before:w-3 sm:before:shrink sm:before:content-[''] sm:after:w-3 sm:after:shrink sm:after:content-[''] sm:text-xs ${
+                className={`relative isolate flex min-w-0 items-center justify-center whitespace-nowrap rounded-none px-2 py-3 transition-transform duration-100 ease-out active:scale-[0.97] text-[0.6875rem] leading-[14px] text-muted-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:before:w-3 sm:before:shrink sm:before:content-[''] sm:after:w-3 sm:after:shrink sm:after:content-[''] sm:text-xs ${
                   active ? "font-semibold" : ""
                 }`}
-                onMouseEnter={() => setHoveredPath(item.path)}
+                onPointerEnter={(event) => {
+                  // touch fires a pointerenter on tap that never leaves, so the pill would stick
+                  if (event.pointerType === "mouse") setHoveredPath(item.path);
+                }}
                 onFocus={() => setHoveredPath(item.path)}
                 onBlur={() => setHoveredPath(null)}
               >
