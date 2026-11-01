@@ -45,13 +45,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Create release pull request or deploy release
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
-          publish: pnpm run release
-          version: pnpm run version
-          commit: "chore: release portfolio"
-          title: "chore: release portfolio"
-          createGithubReleases: true
+          publish-script: pnpm run release
+          version-script: pnpm run version
+          commit-message: "chore: release portfolio"
+          pr-title: "chore: release portfolio"
+          create-github-releases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
