@@ -4,6 +4,14 @@
   line-height: 1.8;
   overflow-wrap: break-word;
 
+  /* prose keeps a readable measure while media fills the column */
+  > :where(p, ul, ol, dl, blockquote, h1, h2, h3, h4, h5, h6, hr) {
+    max-width: 40rem;
+  }
+  > :where(pre, table, div:has(> pre)) {
+    max-width: 48rem;
+  }
+
   :is(h1, h2, h3, h4) {
     color: var(--foreground);
     font-family: var(--font-heading);

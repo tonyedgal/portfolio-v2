@@ -1,17 +1,20 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { Settings2 } from "lucide-react";
+import { motion, useReducedMotionConfig } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useId, useRef, useState } from "react";
 
 import {
   navigationTypes,
   portfolioSections,
   sectionForPath,
 } from "@/lib/portfolio-sections";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { SettingsNav, segmentClasses } from "@/components/SettingsNav";
+import { useOutsideClick } from "@/hooks/use-outside-click";
+import { cn } from "@/lib/utils";
 import spaceman from "../../public/Spaceman.webp";
 
 // a click during a running slide would otherwise wait for it, so fast clicks replay late
@@ -23,10 +26,24 @@ export default function NavBar() {
   const pathname = usePathname();
   const activePath = sectionForPath(pathname).path;
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionConfig();
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const settingsId = useId();
+  const settingsRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  useOutsideClick([settingsRef, toggleRef], () => setSettingsOpen(false), settingsOpen);
 
   return (
-    <div className="mx-auto w-max max-w-full rounded-xs border border-border bg-transparent p-1 shadow-sm backdrop-blur-md">
+    <div
+      className="relative mx-auto w-max max-w-full rounded-xs border border-border bg-background/80 p-1 shadow-sm backdrop-blur-md"
+      onKeyDown={(event) => {
+        if (event.key !== "Escape" || !settingsOpen) return;
+        setSettingsOpen(false);
+        toggleRef.current?.focus();
+      }}
+    >
+      <SettingsNav id={settingsId} open={settingsOpen} ref={settingsRef} />
       <nav
         aria-label="Main navigation"
         className="relative flex items-center justify-between"
@@ -94,7 +111,22 @@ export default function NavBar() {
             );
           })}
         </div>
-        <ThemeToggle />
+        <button
+          ref={toggleRef}
+          type="button"
+          aria-label="Settings"
+          aria-expanded={settingsOpen}
+          aria-controls={settingsId}
+          data-active={settingsOpen || undefined}
+          onClick={() => setSettingsOpen((open) => !open)}
+          className={cn(segmentClasses, "mx-1 px-0")}
+        >
+          <Settings2
+            aria-hidden="true"
+            className="size-4 transition-transform duration-200 ease-out in-data-active:rotate-90"
+            strokeWidth={1.75}
+          />
+        </button>
       </nav>
     </div>
   );
