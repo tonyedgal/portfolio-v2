@@ -8,11 +8,12 @@ import { ContentWrapper } from "@/components/PortfolioLayout";
 function ArticleHeader({ id, date }: { id: string; date: string }) {
   return (
     <header className="relative mb-10 xl:mb-0">
-      <div className="pointer-events-none absolute top-0 left-[max(-0.5rem,calc(50%-18.625rem))] z-40 flex h-4 items-center justify-end gap-x-2 lg:right-[calc(max(2rem,50%-38rem)+40rem)] lg:left-0 lg:min-w-lg xl:h-8">
-        <Link href={`#${id}`} className="hidden xl:pointer-events-auto xl:block xl:text-xs/4 xl:font-medium xl:text-muted-foreground">
+      {/* the date wraps inside the content gutter, so wide theme fonts never run into the entry */}
+      <div className="pointer-events-none absolute top-0 left-0 z-40 flex h-4 items-center gap-x-2 lg:left-0 xl:h-8">
+        <div className="h-px w-3.5 bg-border" />
+        <Link href={`#${id}`} className="hidden xl:pointer-events-auto xl:block xl:max-w-[9.5rem] xl:text-xs/4 xl:font-medium xl:text-balance xl:text-muted-foreground">
           {date}
         </Link>
-        <div className="h-px w-3.5 bg-border lg:-mr-3.5 xl:mr-0" />
       </div>
       <ContentWrapper>
         <Link href={`#${id}`} className="text-xs/4 font-medium text-muted-foreground xl:hidden">
