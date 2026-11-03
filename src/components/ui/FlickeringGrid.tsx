@@ -13,6 +13,7 @@ type FlickeringGridProps = Omit<
   flickerChance?: number;
   color?: string;
   maxOpacity?: number;
+  paused?: boolean;
 };
 
 const frameInterval = 1000 / 12;
@@ -23,6 +24,7 @@ export function FlickeringGrid({
   flickerChance = 0.2,
   color = "var(--primary)",
   maxOpacity = 0.24,
+  paused = false,
   className,
   ...props
 }: FlickeringGridProps) {
@@ -61,9 +63,8 @@ export function FlickeringGrid({
 
     if (!canvas || !container || !context) return;
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const reducedMotion =
+      paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let frameId = 0;
     let cancelStart = () => {};
     let isVisible = true;
@@ -164,7 +165,7 @@ export function FlickeringGrid({
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
     };
-  }, [flickerChance, gridGap, maxOpacity, resolveColor, squareSize]);
+  }, [flickerChance, gridGap, maxOpacity, paused, resolveColor, squareSize]);
 
   return (
     <div

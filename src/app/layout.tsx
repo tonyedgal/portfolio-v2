@@ -10,7 +10,9 @@ import {
 } from "next/font/google";
 import { AnalyticsProvider } from "@/components/posthog-provider";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { MotionPreference } from "@/components/MotionPreference";
 import { PortfolioLayout } from "@/components/PortfolioLayout";
+import { preferencesScript } from "@/lib/preferences-script";
 import { cn } from "@/lib/utils";
 import { siteUrl } from "@/lib/site-metadata";
 
@@ -93,6 +95,7 @@ export default function RootLayout({
           "selection:bg-accent selection:text-accent-foreground",
         )}
       >
+        <script dangerouslySetInnerHTML={{ __html: preferencesScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -129,7 +132,9 @@ export default function RootLayout({
             >
               Skip to content
             </a>
-            <PortfolioLayout>{children}</PortfolioLayout>
+            <MotionPreference>
+              <PortfolioLayout>{children}</PortfolioLayout>
+            </MotionPreference>
           </ThemeProvider>
         </AnalyticsProvider>
       </body>
