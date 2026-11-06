@@ -11,6 +11,7 @@ export function ProjectScreens({ slug, name }: { slug: string; name: string }) {
     <SpineAccordion
       label={`${name} screenshots`}
       items={media.screenshots}
+      orientation={media.orientation}
       className="my-8"
     />
   );

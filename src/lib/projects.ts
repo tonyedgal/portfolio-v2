@@ -1,9 +1,11 @@
 import type { GalleryItem } from "@/components/ui/expandable-gallery";
-import type { SpineItem } from "@/components/ui/spine-accordion";
+import type { SpineItem, SpineOrientation } from "@/components/ui/spine-accordion";
 
 export type ProjectMedia = {
   // product screenshots shown on the projects index, one spine each
   screenshots: SpineItem[];
+  // "horizontal" sets portrait screenshots side by side; the default stacks wide ones
+  orientation?: SpineOrientation;
   // extra screenshots shown as a card stack on the project page
   gallery: GalleryItem[];
 };
