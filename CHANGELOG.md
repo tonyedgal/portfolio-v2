@@ -1,5 +1,13 @@
 # portfolio-v2
 
+## 0.2.0
+
+### Minor Changes
+
+- 7035b29: On a first visit, the settings bar opens for a few seconds so visitors can see the theme, grid, animation, sound, and navbar controls. It closes by itself, or sooner on a scroll, Escape, or a click outside it, and stays open while the visitor uses it. It does not open by itself again.
+- b07ddae: Home is now the default route, with a dated timeline of roles, projects, and writing; Experience moves to `/experience` and a new Keynotes page lists talks, panels, and mentorship sessions. The navbar can switch between text tabs and icon tabs with tooltips, and its active indicator no longer jumps when you return to a page. Scrolling plays a soft ratchet that follows scroll speed, the settings toggles and choices have their own sounds, and a new button in the settings bar mutes them. Project screenshots can sit in a horizontal spine for portrait images, and images that do not fill a spine are shown whole and centred.
+- 8a78f01: Rebuild the layout around a collapsible introduction sidebar with full-width content. A settings bar above the navbar controls light and dark mode, the background grid, motion, and the accent colour. The intro heading rotates through roles, story chapters open into photo stacks, and each project shows its screenshots in a spine accordion with a button to its project page. Timeline dates no longer collide with entry content on wide screens, and the stacked layout between phone and desktop widths now shares one left edge.
+
 ## 0.1.8
 
 ### Patch Changes
