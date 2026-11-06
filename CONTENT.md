@@ -3,7 +3,8 @@
 Edit the MDX files in `src/content`. Standard Markdown works for headings, paragraphs, lists, links, and emphasis. Use `**important words**` for foreground emphasis inside muted body text.
 
 - `intro.mdx`: persistent introduction.
-- `experience.mdx`: work history, skills, education; default route `/`.
+- `home.mdx`: dated timeline of roles, projects, and writing; default route `/`.
+- `experience.mdx`: work history, skills, education at `/experience`.
 - `projects.mdx`: project index at `/projects`.
 - `ui-theme.mdx`: current project detail at `/projects/ui-theme`.
 - `spaceman-react-theme-animation.mdx` and `spaceman-skills.mdx`: project details.
@@ -21,20 +22,39 @@ The diagonal background article uses local WebP images in
 `public/blog/diagonal-background-pattern-with-tailwindcss`. Its text comes from
 the supplied Markdown, and its October 18, 2025 publication date comes from DEV.
 
-## Add a story photo
+## Add a story chapter
 
-Put optimized images in `public/story/`, import the shared component at the top of `story.mdx`, and add entries from oldest to newest. Use the actual image dimensions and descriptive alternative text. Remove the empty-state heading and paragraph when the first photo is added.
+Put optimized images in `public/story/`, import them at the top of `story.mdx`, and add one `StoryChapter` per chapter, oldest first. Each photo needs descriptive alternative text; `label` and `detail` show on the open card.
 
 ```mdx
-import { StoryPhoto } from '@/components/StoryPhoto'
+import { StoryChapter } from "@/components/StoryChapter";
+import firstDay from "../../public/story/first-day.webp";
 
-<StoryPhoto
-  src="/story/your-photo.webp"
-  alt="Describe what the photograph shows"
-  year="Year of the photograph"
-  caption="Your short story about this moment."
-  width={1200}
-  height={800}
+<StoryChapter
+  number="01"
+  title="Your chapter title"
+  photos={[
+    { id: "first-day", src: firstDay, alt: "Describe what the photograph shows", label: "Your short caption", detail: "2019" },
+  ]}
+/>
+```
+
+## Show screenshots or portrait photos as spines
+
+Project screenshots live in `src/lib/projects.ts`. The spines stack by default, which suits wide screenshots. Set `orientation: "horizontal"` on a project to set portrait images side by side; a horizontal spine opens on click, on keyboard focus, or when the mouse moves over it.
+
+`SpineAccordion` also works directly in MDX, for example for portrait photos in `story.mdx`:
+
+```mdx
+import { SpineAccordion } from "@/components/ui/spine-accordion";
+import portrait from "../../public/story/portrait.webp";
+
+<SpineAccordion
+  label="Your section name"
+  orientation="horizontal"
+  items={[
+    { id: "portrait", title: "Your short caption", section: "2019", image: portrait, alt: "Describe what the photograph shows" },
+  ]}
 />
 ```
 
