@@ -1,13 +1,13 @@
-import Experience from "@/content/experience.mdx";
+import Home from "@/content/home.mdx";
 import { PageTransition } from "@/components/PageTransition";
 import { createPageMetadata, socialCards } from "@/lib/site-metadata";
 
-export const metadata = createPageMetadata(socialCards.experience);
+export const metadata = createPageMetadata(socialCards.home);
 
-export default function Home() {
+export default function Page() {
   return (
     <PageTransition>
-      <Experience />
+      <Home />
     </PageTransition>
   );
 }
