@@ -1,6 +1,8 @@
 export const portfolioSections = [
-  { name: "Experience", path: "/", palette: "default" },
+  { name: "Home", path: "/", palette: "default" },
   { name: "Projects", path: "/projects", palette: "claude" },
+  { name: "Experience", path: "/experience", palette: "default" },
+  { name: "Keynotes", path: "/keynotes", palette: "default" },
   { name: "Blog", path: "/blog", palette: "mono" },
   { name: "Story", path: "/story", palette: "mocha" },
 ] as const;
@@ -10,7 +12,7 @@ export type PortfolioSection = (typeof portfolioSections)[number];
 export function sectionForPath(pathname: string): PortfolioSection {
   return (
     portfolioSections.find(
-      ({ path }) => pathname === path || pathname.startsWith(`${path}/`),
+      ({ path }) => pathname === path || (path !== "/" && pathname.startsWith(`${path}/`)),
     ) ?? portfolioSections[0]
   );
 }

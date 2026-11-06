@@ -17,12 +17,25 @@ export type SocialCard = {
 };
 
 export const socialCards = {
-  experience: {
+  home: {
     path: "/",
     label: "Portfolio",
     title: "Frontend Engineer",
     description:
       "Design and engineering for web and desktop products across AI, security, ecommerce, and EdTech.",
+  },
+  experience: {
+    path: "/experience",
+    label: "Experience",
+    title: "Experience",
+    description:
+      "Roles across frontend architecture, design systems, product UI, and fullstack development.",
+  },
+  keynotes: {
+    path: "/keynotes",
+    label: "Keynotes",
+    title: "Keynotes",
+    description: "Talks and presentations on interfaces, theming, and frontend engineering.",
   },
   projects: {
     path: "/projects",

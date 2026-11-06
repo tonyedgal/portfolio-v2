@@ -57,7 +57,7 @@ const merriweather = Merriweather({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: "Experience · Tony Edgal", template: "%s · Tony Edgal" },
+  title: { default: "Tony Edgal · Frontend Engineer", template: "%s · Tony Edgal" },
   authors: [{ name: "Tony Edgal", url: siteUrl }],
   creator: "Tony Edgal",
   description:

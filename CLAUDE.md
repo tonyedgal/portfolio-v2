@@ -6,8 +6,8 @@ human communication, comments, and commits. This file describes the project.
 ## Product and content context
 
 This is Tony Edgal's personal portfolio for hiring managers and engineering
-leads. Experience is the default route; Projects, Blog, and Story are separate
-routes. The persistent introduction contains identity, contact, social, and
+leads. Home is the default route: a dated timeline of roles, projects, and
+writing. Projects, Experience, Keynotes, Blog, and Story are separate routes. The persistent introduction contains identity, contact, social, and
 résumé links.
 
 Content rules:
@@ -18,7 +18,7 @@ Content rules:
   `public/Tony-Resume-Frontend-Engineer.pdf`. Do not invent employers, dates, outcomes,
   availability, projects, metrics, articles, or photographs.
 - Story photographs and their captions must come from the user. Store optimized
-  assets under `public/story/` and render them with `StoryPhoto`.
+  assets under `public/story/` and render them in a `StoryChapter`.
 - Preserve the supplied spelling and punctuation in names, titles, company
   names, links, and dates unless the user asks for an editorial change.
 
@@ -40,8 +40,9 @@ src/styles/typography.css       Shared MDX reading styles
 public/                         Static images and downloadable résumé
 ```
 
-- The root route `/` renders Experience.
-- `/projects`, `/blog`, and `/story` render their matching index MDX files.
+- The root route `/` renders Home (`src/content/home.mdx`).
+- `/projects`, `/experience`, `/keynotes`, `/blog`, and `/story` render their
+  matching index MDX files.
 - Detail routes import their own MDX, such as `/projects/ui-theme` and
   `/blog/<slug>`.
 - Add a navigation item only when the user wants a new top-level destination.
@@ -106,9 +107,9 @@ The former DPR/ref override is obsolete guidance; do not treat it as a required
 compatibility path. Verify the circle origin through the supported element ref
 or explicit-origin API.
 
-The requested route palettes are Experience `/` → `default`, Projects
-`/projects` and descendants → `claude`, Blog `/blog` and descendants → `mono`,
-and Story `/story` → `mocha`. Light/dark mode is a separate choice.
+The route palettes are Home `/`, Experience `/experience`, and Keynotes
+`/keynotes` → `default`, Projects `/projects` and descendants → `claude`, Blog
+`/blog` and descendants → `mono`, and Story `/story` → `mocha`. Light/dark mode is a separate choice.
 
 `src/lib/portfolio-sections.ts` defines section paths and palettes. The local
 provider renders `data-portfolio-theme` from the pathname. Global CSS selects

@@ -10,5 +10,5 @@ export const size = socialImageSize;
 export const contentType = socialImageContentType;
 
 export default function Image() {
-  return createSocialImage(socialCards.experience);
+  return createSocialImage(socialCards.home);
 }
