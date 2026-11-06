@@ -1,9 +1,11 @@
 "use client";
 
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { motion } from "motion/react";
 import Image from "next/image";
 import { useId } from "react";
 
+import { ScrollSound } from "@/components/ScrollSound";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { sidebarMs, useSidebar } from "@/components/layout/SidebarProvider";
 import spaceman from "../../../public/Spaceman.webp";
@@ -68,6 +70,7 @@ export function PortfolioShell({
       </aside>
       <div className="relative min-w-0">
         <Timeline />
+        <ScrollSound />
         <button
           type="button"
           onClick={toggle}
@@ -82,9 +85,11 @@ export function PortfolioShell({
         </button>
         {children}
       </div>
-      <div data-floating-nav className="z-50 flex justify-center [view-transition-name:site-nav] max-lg:fixed max-lg:inset-x-0 max-lg:bottom-0 max-lg:h-(--mobile-nav-height) max-lg:items-center max-lg:bg-background/95 max-lg:pb-[env(safe-area-inset-bottom)] max-lg:backdrop-blur-md lg:fixed lg:bottom-6 lg:left-(--nav-x) lg:w-max lg:max-w-(--nav-max) lg:-translate-x-1/2 lg:transition-[left] lg:duration-(--sidebar-ms) lg:ease-(--ease-drawer)">
+      {/* layoutScroll on a fixed element makes the nav's slides ignore page scroll; otherwise a route that
+          scrolls further to #content starts them from above */}
+      <motion.div layoutScroll data-floating-nav className="z-50 flex justify-center [view-transition-name:site-nav] max-lg:fixed max-lg:inset-x-0 max-lg:bottom-0 max-lg:h-(--mobile-nav-height) max-lg:items-center max-lg:bg-background/95 max-lg:pb-[env(safe-area-inset-bottom)] max-lg:backdrop-blur-md lg:fixed lg:bottom-6 lg:left-(--nav-x) lg:w-max lg:max-w-(--nav-max) lg:-translate-x-1/2 lg:transition-[left] lg:duration-(--sidebar-ms) lg:ease-(--ease-drawer)">
         {nav}
-      </div>
+      </motion.div>
     </div>
   );
 }

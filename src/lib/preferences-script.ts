@@ -1,2 +1,2 @@
 // runs before paint so saved choices never flash the defaults
-export const preferencesScript = `try{var r=document.documentElement,m=localStorage.getItem("portfolio-motion"),b=localStorage.getItem("portfolio-backdrop");if(m==="reduced")r.dataset.motion="reduced";if(b==="none")r.dataset.backdrop=b}catch(e){}`;
+export const preferencesScript = `try{var r=document.documentElement,s=function(k){return localStorage.getItem("portfolio-"+k)},m=s("motion"),b=s("backdrop"),n=s("nav"),a=s("sound");if(m==="reduced")r.dataset.motion="reduced";if(b==="none")r.dataset.backdrop=b;if(n==="classic")r.dataset.nav=n;if(a==="off")r.dataset.sound=a}catch(e){}`;

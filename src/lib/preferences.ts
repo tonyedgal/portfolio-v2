@@ -49,3 +49,33 @@ export function setBackdrop(backdrop: Backdrop) {
   document.documentElement.dataset.backdrop = backdrop;
   save("backdrop", backdrop);
 }
+
+export const navStyles = ["tabs", "classic"] as const;
+
+export type NavStyle = (typeof navStyles)[number];
+
+const navStyleSnapshot = (): NavStyle =>
+  document.documentElement.dataset.nav === "classic" ? "classic" : "tabs";
+
+export function useNavStyle() {
+  return useSyncExternalStore(subscribe, navStyleSnapshot, () => "tabs" as NavStyle);
+}
+
+export function setNavStyle(style: NavStyle) {
+  document.documentElement.dataset.nav = style;
+  save("nav", style);
+}
+
+const soundSnapshot = () => document.documentElement.dataset.sound !== "off";
+
+export function useSoundEnabled() {
+  return useSyncExternalStore(subscribe, soundSnapshot, () => true);
+}
+
+export function setSoundEnabled(enabled: boolean) {
+  const root = document.documentElement;
+
+  if (enabled) delete root.dataset.sound;
+  else root.dataset.sound = "off";
+  save("sound", enabled ? "on" : "off");
+}

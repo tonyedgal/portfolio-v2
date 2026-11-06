@@ -8,6 +8,7 @@ import { useCallback, useRef, useState, useSyncExternalStore } from 'react'
 
 import { cn } from '@/lib/utils'
 import { colorThemes } from '@/lib/color-themes'
+import { playSelect } from '@/lib/sounds'
 
 const GAP = 16
 
@@ -39,9 +40,13 @@ function getPlacement(trigger: DOMRect, width: number, height: number) {
 
 function ColorThemePicker({
   themes = colorThemes,
+  onOpenChange,
   className,
   ...props
-}: React.ComponentProps<'div'> & { themes?: string[] }) {
+}: React.ComponentProps<'div'> & {
+  themes?: string[]
+  onOpenChange?: (open: boolean) => void
+}) {
   const { colorTheme, switchColorTheme } = useTheme()
   // follows the site motion setting as well as the system one
   const reduced = useReducedMotionConfig()
@@ -52,7 +57,16 @@ function ColorThemePicker({
     () => false,
   )
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpenState] = useState(false)
+
+  // tells the host when the swatch row shows, e.g. to hide a tooltip that would sit under it
+  const setOpen = useCallback(
+    (next: boolean) => {
+      setOpenState(next)
+      onOpenChange?.(next)
+    },
+    [onOpenChange],
+  )
 
   const [placement, setPlacement] = useState<Placement>({
     side: 'top',
@@ -69,7 +83,7 @@ function ColorThemePicker({
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
   const focusOnOpen = useRef(false)
 
-  const close = useCallback(() => setOpen(false), [])
+  const close = useCallback(() => setOpen(false), [setOpen])
 
   const show = () => {
     setActiveIndex(Math.max(0, themes.indexOf(colorTheme)))
@@ -220,7 +234,10 @@ function ColorThemePicker({
                   data-color-theme={name}
                   initial={reduced ? false : { scale: 0.5, opacity: 0 }}
                   key={name}
-                  onClick={() => switchColorTheme(name)}
+                  onClick={() => {
+                    playSelect()
+                    switchColorTheme(name)
+                  }}
                   onFocus={() => setActiveIndex(i)}
                   ref={(node) => {
                     itemRefs.current[i] = node

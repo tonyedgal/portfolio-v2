@@ -21,6 +21,8 @@ export function useOutsideClick(
 
       const target = event.target as Element;
 
+      // a control that swaps its icon on click detaches the clicked node before this runs
+      if (!target.isConnected) return;
       if (ignore && target.closest?.(ignore)) return;
       if (refs.every((ref) => !ref.current?.contains(target))) latest.current();
     };
