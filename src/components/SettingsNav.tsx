@@ -74,8 +74,9 @@ export function SettingsNav({
         role="toolbar"
         aria-label="Display settings"
         data-open={open}
+        // on a first visit the page marks the root before paint, so the bar shows before this code runs
         inert={!open}
-        className="pointer-events-auto mb-2 flex w-max origin-bottom items-center gap-1 rounded-full border border-border bg-background p-1 shadow-sm transition-[opacity,scale,translate,visibility] duration-[260ms] ease-(--ease-drawer) data-[open=false]:invisible data-[open=false]:translate-y-[calc(100%+0.5rem)] data-[open=false]:scale-[0.96] data-[open=false]:opacity-0 data-[open=false]:duration-[180ms] data-[open=false]:ease-(--ease-sp-out) motion-reduce:translate-y-0 motion-reduce:scale-100 [--ease-drawer:cubic-bezier(0.32,0.72,0,1)]"
+        className="pointer-events-auto mb-2 flex w-max origin-bottom items-center gap-1 rounded-full border border-border bg-background p-1 shadow-sm transition-[opacity,scale,translate,visibility] duration-[260ms] ease-(--ease-drawer) data-[open=false]:invisible data-[open=false]:translate-y-[calc(100%+0.5rem)] data-[open=false]:scale-[0.96] data-[open=false]:opacity-0 data-[open=false]:duration-[180ms] data-[open=false]:ease-(--ease-sp-out) motion-reduce:translate-y-0 motion-reduce:scale-100 in-data-reveal:visible! in-data-reveal:translate-y-0! in-data-reveal:scale-100! in-data-reveal:opacity-100! [--ease-drawer:cubic-bezier(0.32,0.72,0,1)]"
       >
         <Hint label={<><span className="dark:hidden">Switch to dark mode</span><span className="hidden dark:inline">Switch to light mode</span></>}>
           {/* light is the "on" side, so going dark plays the off sound */}
