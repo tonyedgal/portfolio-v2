@@ -9,6 +9,7 @@ import {
   Oxanium,
 } from "next/font/google";
 import { AnalyticsProvider } from "@/components/posthog-provider";
+import { SoundPrompt } from "@/components/SoundPrompt";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { MotionPreference } from "@/components/MotionPreference";
 import { PortfolioLayout } from "@/components/PortfolioLayout";
@@ -135,6 +136,7 @@ export default function RootLayout({
             <MotionPreference>
               <PortfolioLayout>{children}</PortfolioLayout>
             </MotionPreference>
+            <SoundPrompt />
           </ThemeProvider>
         </AnalyticsProvider>
       </body>
