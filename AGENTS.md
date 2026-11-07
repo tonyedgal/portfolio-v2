@@ -133,6 +133,8 @@ Default to no comment. Write one only where the code cannot say it itself: a dec
 - One line, lowercase. Never a multi-line block.
 - Never restate what the next line does. If the code reads fine, delete the comment.
 - No JSDoc, no section banners, no `// handle X` above a function called `handleX`.
+- Keep reference names out of identifiers, comments, other UI copy, filenames,
+  commit messages, and verification artifacts.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
