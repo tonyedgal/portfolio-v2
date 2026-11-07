@@ -27,7 +27,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/global-tooltip";
-import { useFirstVisitReveal } from "@/hooks/use-first-visit-reveal";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 import { useNavStyle } from "@/lib/preferences";
 import { cn } from "@/lib/utils";
@@ -252,7 +251,6 @@ export default function NavBar() {
     () => setSettingsOpen(false),
     settingsOpen,
   );
-  const cancelReveal = useFirstVisitReveal(settingsRef, settingsOpen, setSettingsOpen);
 
   return (
     <TooltipProvider>
@@ -297,10 +295,7 @@ export default function NavBar() {
               aria-label="Settings"
               aria-expanded={settingsOpen}
               aria-controls={settingsId}
-              onClick={() => {
-                cancelReveal();
-                setSettingsOpen((open) => !open);
-              }}
+              onClick={() => setSettingsOpen((open) => !open)}
               className={cn(
                 tabs
                   ? "grid size-9 shrink-0 cursor-pointer place-items-center rounded-xl text-muted-foreground transition-[color,background-color,scale] duration-150 ease-out hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring active:scale-[0.96]"
