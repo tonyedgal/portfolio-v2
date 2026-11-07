@@ -252,7 +252,7 @@ export default function NavBar() {
     () => setSettingsOpen(false),
     settingsOpen,
   );
-  const cancelReveal = useFirstVisitReveal(settingsRef, setSettingsOpen);
+  const cancelReveal = useFirstVisitReveal(settingsRef, settingsOpen, setSettingsOpen);
 
   return (
     <TooltipProvider>
