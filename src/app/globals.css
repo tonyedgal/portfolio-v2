@@ -712,3 +712,13 @@
     animation-delay: 0s !important;
   }
 }
+
+/* below lg the sound toast sits on the bottom navbar, not over the start of the page; html outranks the
+   toast's own injected rule */
+html .tst-viewport[data-position^="bottom"] .tst-slot {
+  bottom: calc(var(--mobile-nav-height) + 0.5rem);
+}
+/* the open settings bar takes the same place, so the toast moves up above it */
+html:has([aria-label="Display settings"][data-open="true"]) .tst-viewport[data-position^="bottom"] .tst-slot {
+  bottom: calc(var(--mobile-nav-height) + 3.5rem);
+}
