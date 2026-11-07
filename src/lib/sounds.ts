@@ -74,9 +74,30 @@ export function startScrollSound() {
     }, 90);
   }
 
+  // browsers start audio only from inside a tap, click, or key press; a scroll never counts. Safari also
+  // forgets the permission once the handler ends, so the context is started here, not on the next scroll
+  const unlockEvents = ["pointerdown", "keydown", "touchend"] as const;
+  function unlock() {
+    // the end of a swipe is not a tap, so the browser would refuse it anyway
+    if (navigator.userActivation && !navigator.userActivation.isActive) return;
+    const ctx = getAudioContext();
+    if (ctx.state === "running") return removeUnlock();
+    ctx.resume().then(removeUnlock, () => {});
+    // iOS Safari stays silent until a source starts inside the gesture, so play one silent sample
+    const silent = ctx.createBufferSource();
+    silent.buffer = ctx.createBuffer(1, 1, ctx.sampleRate);
+    silent.connect(ctx.destination);
+    silent.start();
+  }
+  function removeUnlock() {
+    unlockEvents.forEach((type) => window.removeEventListener(type, unlock, true));
+  }
+  unlockEvents.forEach((type) => window.addEventListener(type, unlock, { capture: true, passive: true }));
+
   window.addEventListener("scroll", onScroll, { passive: true });
 
   return () => {
+    removeUnlock();
     window.removeEventListener("scroll", onScroll);
     window.clearTimeout(stopTimer);
     source?.stop();
