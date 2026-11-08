@@ -1,5 +1,16 @@
 # portfolio-v2
 
+## 0.3.0
+
+### Minor Changes
+
+- fb78746: Ask visitors to turn on sound with a toast on each full page load. On phones and tablets the toast sits above the bottom navbar, and it follows the site's light or dark theme.
+
+### Patch Changes
+
+- 2ed78c1: Show the settings bar from the first paint on a first visit, start its timer only when the tab is visible, and unlock sound on the first tap, click, or key press.
+- b9f71ce: Stop opening the settings bar by itself on a first visit. The sound toast now points visitors to the settings button.
+
 ## 0.2.0
 
 ### Minor Changes
