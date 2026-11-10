@@ -7,6 +7,7 @@ import {
   Merriweather,
   Noto_Sans,
   Oxanium,
+  Source_Code_Pro,
 } from "next/font/google";
 import { AnalyticsProvider } from "@/components/posthog-provider";
 import { SoundPrompt } from "@/components/SoundPrompt";
@@ -56,6 +57,13 @@ const merriweather = Merriweather({
   preload: false,
 });
 
+const sourceCodePro = Source_Code_Pro({
+  subsets: ["latin"],
+  variable: "--type-source-code-pro",
+  display: "swap",
+  preload: false,
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "Tony Edgal · Frontend Engineer", template: "%s · Tony Edgal" },
@@ -85,6 +93,7 @@ export default function RootLayout({
         dmSans.variable,
         oxanium.variable,
         merriweather.variable,
+        sourceCodePro.variable,
       )}
       suppressHydrationWarning
     >

@@ -1,7 +1,7 @@
 export const portfolioSections = [
   { name: "Home", path: "/", palette: "default" },
   { name: "Projects", path: "/projects", palette: "claude" },
-  { name: "Experience", path: "/experience", palette: "default" },
+  { name: "Experience", path: "/experience", palette: "perpetuity" },
   { name: "Keynotes", path: "/keynotes", palette: "default" },
   { name: "Blog", path: "/blog", palette: "mono" },
   { name: "Story", path: "/story", palette: "mocha" },
