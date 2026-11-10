@@ -1,5 +1,11 @@
 # portfolio-v2
 
+## 0.4.0
+
+### Minor Changes
+
+- 0da6bed: Give the Experience section its own perpetuity palette: teal colours, sharp corners, and monospace type in light and dark mode.
+
 ## 0.3.0
 
 ### Minor Changes
