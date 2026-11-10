@@ -107,8 +107,8 @@ The former DPR/ref override is obsolete guidance; do not treat it as a required
 compatibility path. Verify the circle origin through the supported element ref
 or explicit-origin API.
 
-The route palettes are Home `/`, Experience `/experience`, and Keynotes
-`/keynotes` → `default`, Projects `/projects` and descendants → `claude`, Blog
+The route palettes are Home `/` and Keynotes `/keynotes` → `default`,
+Experience `/experience` → `perpetuity`, Projects `/projects` and descendants → `claude`, Blog
 `/blog` and descendants → `mono`, and Story `/story` → `mocha`. Light/dark mode is a separate choice.
 
 `src/lib/portfolio-sections.ts` defines section paths and palettes. The local
