@@ -47,9 +47,6 @@ importers:
       '@types/react-dom':
         specifier: 19.3.0
         version: 19.3.0(@types/react@19.3.0)
-      '@yusufceng1z/ding-react':
-        specifier: ^0.0.2
-        version: 0.0.2(react@19.3.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -74,6 +71,9 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      notch-toast:
+        specifier: 0.2.0
+        version: 0.2.0(motion@13.4.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       postcss:
         specifier: 8.5.28
         version: 8.5.28
@@ -2200,16 +2200,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@yusufceng1z/ding-react@0.0.2':
-    resolution: {integrity: sha512-lwSeNwxTifI9UZu5SOQgZU3brU/NuAKPsWyhHyn7HmvgHO6d2jysj7Kv592XT42OIxQ/JMtNuheWshAQJSJVjA==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      react: '>=18'
-
-  '@yusufceng1z/ding@0.0.2':
-    resolution: {integrity: sha512-amncS7tqeC8zHx+Xz0lCOyMGr3Tt7D7l0b9xUkBqjbtW1m0XqRLkG+pFGjFDYNRqx6BRucOzVxG989xoObXkWQ==}
-    engines: {node: '>=18'}
-
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
     engines: {node: '>=6.5'}
@@ -3706,6 +3696,14 @@ packages:
   node-releases@2.0.57:
     resolution: {integrity: sha512-kQK9LGGFiHtrWiNhZtA7Qbw17AQz+dmsEKODRIVTXA9+e5MS/2gZEBhYJt13GrAz5/IOZKddH/0Z3TP/Zgo+yw==}
     engines: {node: '>=18'}
+
+  notch-toast@0.2.0:
+    resolution: {integrity: sha512-dh9eXXKqpHNauZS3RgV9TNrMvY9H0kmHNYy+4WbYuu7gYQKa9YGCHuSVE/HpQksjBGsp2JDBTKOTNCnJgLFbUQ==}
+    hasBin: true
+    peerDependencies:
+      motion: '>=12.0.0 <15.0.0'
+      react: '>=18.2.0 <20.0.0'
+      react-dom: '>=18.2.0 <20.0.0'
 
   npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
@@ -6761,13 +6759,6 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.12.2':
     optional: true
 
-  '@yusufceng1z/ding-react@0.0.2(react@19.3.0)':
-    dependencies:
-      '@yusufceng1z/ding': 0.0.2
-      react: 19.3.0
-
-  '@yusufceng1z/ding@0.0.2': {}
-
   abort-controller@3.0.0:
     dependencies:
       event-target-shim: 5.0.1
@@ -8689,6 +8680,12 @@ snapshots:
       whatwg-url: 5.0.0
 
   node-releases@2.0.57: {}
+
+  notch-toast@0.2.0(motion@13.4.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+    dependencies:
+      motion: 13.4.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
 
   npm-run-path@4.0.1:
     dependencies:
