@@ -4,6 +4,10 @@ import Image from "next/image";
 import betterchalkLogo from "../../public/Betterchalk-logo.png";
 import muzzlabLogo from "../../public/muzzlab_logo.webp";
 import rigrLogo from "../../public/rigr-logo.png";
+import rigrSnow from "../../public/experience/rigr/2024-01-15.webp";
+import rigrTeam from "../../public/experience/rigr/2024-01-16.webp";
+import rigrPortrait from "../../public/experience/rigr/2025-03-14-portrait.webp";
+import { RoleGallery } from "@/components/RoleGallery";
 
 <ContentWrapper className="typography">
 
@@ -38,6 +42,15 @@ Cork, Ireland
 - **VST:** Media catalogue and video-analysis application with a reusable design system and faster search and loading.
 - **Tailli:** Offline licensing and activation platform for secure, air-gapped deployments.
 - **Macha EST:** Desktop application for encrypted evidence workflows.
+
+<RoleGallery
+  title="RIGR AI"
+  photos={[
+    { src: rigrTeam, alt: "Tony Edgal in a suit and flat cap, standing between two colleagues in suits against a white wall" },
+    { src: rigrSnow, alt: "Tony Edgal and two colleagues taking a selfie on a snowy street at night" },
+    { src: rigrPortrait, alt: "An illustrated portrait of Tony Edgal with glasses, over drawings of circuits, a bicycle, music notes and a game controller" },
+  ]}
+/>
 
 </TimelineArticle>
 
