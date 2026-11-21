@@ -34,7 +34,15 @@ function storedLayout(): LightboxLayout {
 
 // the widest card that fits both the track's width and its height at this photo's shape
 const cardWidth = (ratio: number) =>
-  `min(calc(100cqw - 2 * var(--lb-inset-inline)), calc((100cqh - 2 * var(--lb-inset-block)) * ${ratio}))`;
+  `min(calc(100cqw - 2 * var(--lb-inset-inline)), calc((100cqh - var(--lb-inset-block) - var(--lb-inset-bottom)) * ${ratio}))`;
+
+// fades the thumbnails out at both ends of the strip
+const stripMask =
+  "[--lb-strip-mask:linear-gradient(to_right,transparent_0,rgb(0_0_0/0.5)_20px,#000_40px,#000_calc(100%-40px),rgb(0_0_0/0.5)_calc(100%-20px),transparent_100%)] [mask-image:var(--lb-strip-mask)]";
+
+// pulling to close or zooming hides the strip so it does not cover the photo
+const chromeHide =
+  "transition-[opacity,visibility] duration-200 group-data-pulling/lb:invisible group-data-pulling/lb:opacity-0 group-data-pull-dismissing/lb:invisible group-data-pull-dismissing/lb:opacity-0 group-data-zoomed/lb:invisible group-data-zoomed/lb:opacity-0";
 
 function source(photo: LightboxPhoto) {
   if (typeof photo.src === "string") {
@@ -62,6 +70,7 @@ export function PhotoLightbox({
     typeof window === "undefined" ? "peek" : storedLayout(),
   );
   const peek = layout === "peek";
+  const strip = photos.length > 1;
   const ratios = photos.map((photo) => {
     const { width, height } = source(photo);
     return width / height;
@@ -83,7 +92,7 @@ export function PhotoLightbox({
         <Lightbox.Content
           aria-label={label}
           data-photo-lightbox=""
-          className="fixed inset-0 z-[1000] flex flex-col text-white outline-none"
+          className="group/lb fixed inset-0 z-[1000] flex flex-col text-white outline-none"
         >
           <div className="flex items-center justify-between gap-4 px-4 pt-[max(1rem,env(safe-area-inset-top))] sm:px-6">
             <Lightbox.Counter className="font-mono text-xs text-white/70 tabular-nums" />
@@ -119,7 +128,9 @@ export function PhotoLightbox({
               } as React.CSSProperties
             }
             className={cn(
-              "flex min-h-0 flex-1 [container-type:size] [scrollbar-width:none] [--lb-inset-block:1rem] [--lb-inset-inline:2rem] [&::-webkit-scrollbar]:hidden",
+              "flex min-h-0 flex-1 [container-type:size] [scrollbar-width:none] [--lb-inset-block:1rem] [--lb-inset-bottom:var(--lb-inset-block)] [--lb-inset-inline:2rem] [&::-webkit-scrollbar]:hidden",
+              // room under the photos for the thumbnail strip
+              strip && "md:[--lb-inset-bottom:6rem]",
               peek &&
                 // spacers centre the first and last cards under scroll snap
                 "[--lb-gap:1.25rem] md:gap-(--lb-gap) md:before:flex-[0_0_calc((100cqw-var(--lb-snug-width-start))/2-var(--lb-gap))] md:after:flex-[0_0_calc((100cqw-var(--lb-snug-width-end))/2-var(--lb-gap))]",
@@ -135,8 +146,8 @@ export function PhotoLightbox({
                   className={cn(
                     "grid min-w-full flex-[0_0_100%] place-items-center p-4",
                     peek
-                      ? "md:w-(--lb-snug-width) md:min-w-0 md:flex-[0_0_auto] md:px-0 md:py-(--lb-inset-block)"
-                      : "sm:p-10",
+                      ? "md:w-(--lb-snug-width) md:min-w-0 md:flex-[0_0_auto] md:px-0 md:pt-(--lb-inset-block) md:pb-(--lb-inset-bottom)"
+                      : "sm:p-10 md:pb-(--lb-inset-bottom)",
                   )}
                 >
                   <Lightbox.Item
@@ -160,6 +171,42 @@ export function PhotoLightbox({
                 </Lightbox.Slide>
               );
             })}
+
+            {/* docked inside the track so a wheel or trackpad swipe over the thumbnails scrolls
+                the photos; sticky keeps it in place, and order-first with the negative end margin
+                gives it no width, so the snap points do not move */}
+            {strip ? (
+              <div
+                className={cn(
+                  "pointer-events-none sticky inset-x-0 z-[2] order-first w-[100cqw] flex-none self-end px-3 pb-3 me-[calc(-100cqw-var(--lb-gap,0px))] max-md:hidden",
+                  chromeHide,
+                )}
+              >
+                <Lightbox.ThumbnailStrip
+                  className={cn(
+                    "pointer-events-auto w-full min-w-0 py-[0.3125rem] [--lb-thumb-size:3.5rem]",
+                    stripMask,
+                  )}
+                >
+                  <Lightbox.ThumbnailStripTrack aria-label={`${label} thumbnails`} className="flex w-max items-center gap-2">
+                    {photos.map((photo, index) => (
+                      <Lightbox.Thumbnail
+                        key={source(photo).url}
+                        index={index}
+                        className="relative block size-(--lb-thumb-size) shrink-0 cursor-pointer overflow-hidden rounded-[0.5rem] opacity-60 transition-opacity duration-150 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white data-active:opacity-100"
+                      >
+                        <img src={source(photo).url} alt={photo.alt} draggable={false} className="block size-full object-cover" />
+                      </Lightbox.Thumbnail>
+                    ))}
+                  </Lightbox.ThumbnailStripTrack>
+                  {/* a fixed ring on the midline; the active thumbnail scrolls under it */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-1/2 left-1/2 size-[calc(var(--lb-thumb-size)+10px)] -translate-x-1/2 -translate-y-1/2 rounded-[calc(0.5rem+3px)] border-2 border-white"
+                  />
+                </Lightbox.ThumbnailStrip>
+              </div>
+            ) : null}
           </Lightbox.Slides>
 
           <div className="flex items-center justify-between gap-4 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6">
