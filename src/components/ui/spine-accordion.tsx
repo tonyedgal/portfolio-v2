@@ -3,19 +3,28 @@
 import Image, { type StaticImageData } from "next/image";
 import { useState } from "react";
 
+import { PhotoLightbox, PhotoLightboxTrigger } from "@/components/ui/photo-lightbox";
 import { cn } from "@/lib/utils";
 
 export type SpineItem = {
   id: string;
   // what the screenshot shows, set along the spine
   title: string;
-  // the part of the product it was taken from
-  section: string;
+  // the part of the product it was taken from, shown at the far end of the spine
+  section?: string;
   image?: StaticImageData | string;
   alt?: string;
 };
 
 export type SpineOrientation = "vertical" | "horizontal";
+
+// portrait images set side by side; anything else, including placeholders, stacks
+function orientationFor(items: SpineItem[]): SpineOrientation {
+  const portrait = items.every(
+    (item) => typeof item.image === "object" && item.image.height > item.image.width,
+  );
+  return portrait ? "horizontal" : "vertical";
+}
 
 // the shelf keeps one fixed height and the open panel takes whatever the closed spines leave,
 // so switching panels never moves the content below it.
@@ -27,7 +36,7 @@ export function SpineAccordion({
   label,
   defaultIndex = 0,
   spine = "3.5rem",
-  orientation = "vertical",
+  orientation,
   className,
 }: {
   items: SpineItem[];
@@ -38,9 +47,15 @@ export function SpineAccordion({
   className?: string;
 }) {
   const [open, setOpen] = useState(defaultIndex);
-  const horizontal = orientation === "horizontal";
+  const horizontal = (orientation ?? orientationFor(items)) === "horizontal";
 
   if (items.length === 0) return null;
+
+  // only spines with an image join the lightbox, so its indexes skip placeholders
+  const photos = items.flatMap((item) =>
+    item.image ? [{ src: item.image, alt: item.alt ?? item.title }] : [],
+  );
+  let photoIndex = -1;
 
   return (
     <section
@@ -52,83 +67,92 @@ export function SpineAccordion({
       )}
       style={{ "--spine": spine } as React.CSSProperties}
     >
-      {items.map((item, index) => {
-        const isOpen = index === open;
+      <PhotoLightbox photos={photos} label={label}>
+        {items.map((item, index) => {
+          const isOpen = index === open;
+          if (item.image) photoIndex += 1;
 
-        return (
-          <button
-            key={item.id}
-            type="button"
-            aria-expanded={isOpen}
-            onClick={() => setOpen(index)}
-            onFocus={() => setOpen(index)}
-            onPointerMove={(event) => {
-              if (!horizontal || isOpen || event.pointerType !== "mouse") return;
-              if (event.movementX !== 0 || event.movementY !== 0) setOpen(index);
-            }}
-            style={{ flexBasis: isOpen ? "100%" : "var(--spine)" }}
-            className={cn(
-              "relative shrink cursor-pointer border-border text-left transition-[flex-basis] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none",
-              horizontal
-                ? "min-w-(--spine) border-r last:border-r-0"
-                : "min-h-(--spine) border-b last:border-b-0",
-            )}
-          >
-            {/* a horizontal spine turns its label to read bottom to top, like the spine of a book */}
-            <span
+          return (
+            <div
+              key={item.id}
+              onClick={() => setOpen(index)}
+              onPointerMove={(event) => {
+                if (!horizontal || isOpen || event.pointerType !== "mouse") return;
+                if (event.movementX !== 0 || event.movementY !== 0) setOpen(index);
+              }}
+              style={{ flexBasis: isOpen ? "100%" : "var(--spine)" }}
               className={cn(
-                "absolute flex items-center justify-between gap-4 transition-colors duration-500 motion-reduce:transition-none",
+                "relative shrink border-border transition-[flex-basis] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+                isOpen ? "cursor-default" : "cursor-pointer",
                 horizontal
-                  ? "top-4 left-0 h-[calc(100%-2rem)] w-(--spine) rotate-180 [writing-mode:vertical-rl]"
-                  : "inset-x-4 top-0 h-(--spine)",
-                isOpen ? "text-foreground" : "text-muted-foreground",
+                  ? "min-w-(--spine) border-r last:border-r-0"
+                  : "min-h-(--spine) border-b last:border-b-0",
               )}
             >
-              <span className="flex min-h-0 min-w-0 items-baseline gap-3">
-                <span className="font-mono text-[0.6875rem] tabular-nums">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+              {/* a horizontal spine turns its label to read bottom to top, like the spine of a book */}
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                onFocus={() => setOpen(index)}
+                className={cn(
+                  "absolute flex cursor-[inherit] items-center justify-between gap-4 text-left transition-colors duration-500 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none",
+                  horizontal
+                    ? "top-4 left-0 h-[calc(100%-2rem)] w-(--spine) rotate-180 [writing-mode:vertical-rl]"
+                    : "inset-x-4 top-0 h-(--spine)",
+                  isOpen ? "text-foreground" : "text-muted-foreground",
+                )}
+              >
                 <span className="truncate font-heading text-base font-medium tracking-tight sm:text-lg">
                   {item.title}
                 </span>
-              </span>
-              <span className="shrink-0 text-xs text-muted-foreground">{item.section}</span>
-            </span>
+                {item.section ? (
+                  <span className="shrink-0 text-xs text-muted-foreground">{item.section}</span>
+                ) : null}
+              </button>
 
-            {/* mounted while closed so opening fades in an image that is already decoded */}
-            <span
-              className={cn(
-                "absolute block overflow-hidden bg-muted outline-1 -outline-offset-1 outline-black/10 transition-opacity duration-700 motion-reduce:transition-none dark:outline-white/10",
-                horizontal ? "inset-y-3 right-3 left-(--spine)" : "inset-x-3 top-(--spine) bottom-3",
-                isOpen ? "opacity-100" : "opacity-0",
-              )}
-            >
-              {item.image ? (
-                <Image
-                  src={item.image}
-                  alt={item.alt ?? item.title}
-                  fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  // an image with a different shape from the panel is shown whole and centred on both axes
-                  className="pointer-events-none object-contain object-center"
-                />
-              ) : (
-                <span className="absolute inset-0 grid place-items-center text-center">
-                  <span aria-hidden="true" className="absolute inset-0 overflow-hidden opacity-70">
-                    <span className="grain absolute -inset-1/2 block" />
-                  </span>
-                  <span className="relative space-y-1 px-6">
-                    <span className="block text-sm font-medium text-foreground">{item.title}</span>
-                    <span className="block text-xs text-muted-foreground">
-                      Screenshot of {item.section.toLowerCase()} to come
+              {/* mounted while closed so opening fades in an image that is already decoded */}
+              <span
+                className={cn(
+                  "absolute block overflow-hidden bg-muted outline-1 -outline-offset-1 outline-black/10 transition-opacity duration-700 motion-reduce:transition-none dark:outline-white/10",
+                  horizontal ? "inset-y-3 right-3 left-(--spine)" : "inset-x-3 top-(--spine) bottom-3",
+                  isOpen ? "opacity-100" : "pointer-events-none opacity-0",
+                )}
+              >
+                {item.image ? (
+                  <PhotoLightboxTrigger
+                    index={photoIndex}
+                    label={`Open ${item.alt ?? item.title} full screen`}
+                    tabIndex={isOpen ? 0 : -1}
+                    className="absolute inset-0"
+                  >
+                    {(imageRef) => (
+                      <Image
+                        ref={imageRef}
+                        src={item.image!}
+                        alt={item.alt ?? item.title}
+                        fill
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        // an image with a different shape from the panel is shown whole and centred on both axes
+                        className="pointer-events-none object-contain object-center"
+                      />
+                    )}
+                  </PhotoLightboxTrigger>
+                ) : (
+                  <span className="absolute inset-0 grid place-items-center text-center">
+                    <span aria-hidden="true" className="absolute inset-0 overflow-hidden opacity-70">
+                      <span className="grain absolute -inset-1/2 block" />
+                    </span>
+                    <span className="relative space-y-1 px-6">
+                      <span className="block text-sm font-medium text-foreground">{item.title}</span>
+                      <span className="block text-xs text-muted-foreground">Screenshot to come</span>
                     </span>
                   </span>
-                </span>
-              )}
-            </span>
-          </button>
-        );
-      })}
+                )}
+              </span>
+            </div>
+          );
+        })}
+      </PhotoLightbox>
     </section>
   );
 }
