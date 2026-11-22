@@ -10,10 +10,6 @@ import uiThemeInstallationDesktop from "../../public/projects/ui-theme/installat
 import uiThemeInstallationMobile from "../../public/projects/ui-theme/installation-mobile.webp";
 import uiThemeThemeToggleDesktop from "../../public/projects/ui-theme/theme-toggle-desktop.webp";
 import uiThemeThemeToggleMobile from "../../public/projects/ui-theme/theme-toggle-mobile.webp";
-import spacemanReactThemeAnimationLightDesktop from "../../public/projects/spaceman-react-theme-animation/light-desktop.webp";
-import spacemanReactThemeAnimationLightMobile from "../../public/projects/spaceman-react-theme-animation/light-mobile.webp";
-import spacemanReactThemeAnimationDarkDesktop from "../../public/projects/spaceman-react-theme-animation/dark-desktop.webp";
-import spacemanReactThemeAnimationDarkMobile from "../../public/projects/spaceman-react-theme-animation/dark-mobile.webp";
 import spacemanSkillsListingDesktop from "../../public/projects/spaceman-skills/listing-desktop.webp";
 import spacemanSkillsListingMobile from "../../public/projects/spaceman-skills/listing-mobile.webp";
 import spacemanSkillsReplyDesktop from "../../public/projects/spaceman-skills/reply-desktop.webp";
@@ -45,13 +41,6 @@ export const projectMedia: Record<string, ProjectMedia> = {
       { id: "docs", title: "Introduction", section: "Documentation", desktop: uiThemeDocsDesktop, mobile: uiThemeDocsMobile, alt: "UI-Theme documentation introduction page" },
       { id: "installation", title: "Installation", section: "Documentation", desktop: uiThemeInstallationDesktop, mobile: uiThemeInstallationMobile, alt: "UI-Theme installation guide with install paths" },
       { id: "theme-toggle", title: "Theme toggle", section: "Components", desktop: uiThemeThemeToggleDesktop, mobile: uiThemeThemeToggleMobile, alt: "UI-Theme theme toggle component page with a live preview" },
-    ],
-    gallery: [],
-  },
-  "spaceman-react-theme-animation": {
-    screenshots: [
-      { id: "light", title: "Light theme", section: "Live demo", desktop: spacemanReactThemeAnimationLightDesktop, mobile: spacemanReactThemeAnimationLightMobile, alt: "Spaceman React Theme Animation demo app in its light theme" },
-      { id: "dark", title: "Dark theme", section: "Live demo", desktop: spacemanReactThemeAnimationDarkDesktop, mobile: spacemanReactThemeAnimationDarkMobile, alt: "Spaceman React Theme Animation demo app in its dark theme" },
     ],
     gallery: [],
   },
