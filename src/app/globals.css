@@ -839,3 +839,17 @@ html .nt-action {
   flex-shrink: 0;
   white-space: nowrap;
 }
+
+/* the notch paints its surface with --foreground and its text with --background, which inverts it
+   against the page; inside the notch those two point at the palette's muted surface and its ink
+   instead, so it keeps each route's tint and follows light and dark mode */
+html .nt-root {
+  --nt-surface: var(--muted);
+  --nt-ink: var(--foreground);
+}
+html .nt-shell {
+  --foreground: var(--nt-surface);
+  --background: var(--nt-ink);
+  /* the notch's drop shadow reads as a smudge under a surface this close to the page */
+  box-shadow: none;
+}
