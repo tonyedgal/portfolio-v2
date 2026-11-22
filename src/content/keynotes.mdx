@@ -1,7 +1,151 @@
 import { ContentWrapper } from "@/components/PortfolioLayout"
+import { TimelineArticle } from "@/components/TimelineArticle"
+import { SpineAccordion } from "@/components/ui/spine-accordion"
+import aiTwo152316 from "../../public/keynotes/ai-conference-benin-2/img-152316.webp"
+import aiTwo152403 from "../../public/keynotes/ai-conference-benin-2/img-152403.webp"
+import aiTwo152605 from "../../public/keynotes/ai-conference-benin-2/img-152605.webp"
+import aiTwo152644 from "../../public/keynotes/ai-conference-benin-2/img-152644.webp"
+import devfest5298 from "../../public/keynotes/devfest-benin/img-5298.webp"
+import devfest5299 from "../../public/keynotes/devfest-benin/img-5299.webp"
+import devfest5304 from "../../public/keynotes/devfest-benin/img-5304.webp"
+import devfest5324 from "../../public/keynotes/devfest-benin/img-5324.webp"
+import aiOne4930 from "../../public/keynotes/ai-conference-benin-1/img-4930.webp"
+import aiOne4935 from "../../public/keynotes/ai-conference-benin-1/img-4935.webp"
+import aiOne4936 from "../../public/keynotes/ai-conference-benin-1/img-4936.webp"
+import aiOne4937 from "../../public/keynotes/ai-conference-benin-1/img-4937.webp"
+import aiOne4939 from "../../public/keynotes/ai-conference-benin-1/img-4939.webp"
+import aiOne4941 from "../../public/keynotes/ai-conference-benin-1/img-4941.webp"
+import osca4582 from "../../public/keynotes/oscafest/img-4582.webp"
+import osca4583 from "../../public/keynotes/oscafest/img-4583.webp"
+import osca4584 from "../../public/keynotes/oscafest/img-4584.webp"
+import osca4585 from "../../public/keynotes/oscafest/img-4585.webp"
+import react4311 from "../../public/keynotes/modern-react/img-4311.webp"
+import react4312 from "../../public/keynotes/modern-react/img-4312.webp"
+import react4317 from "../../public/keynotes/modern-react/img-4317.webp"
+import react4318 from "../../public/keynotes/modern-react/img-4318.webp"
+import react4327 from "../../public/keynotes/modern-react/img-4327.webp"
+import reactBanner from "../../public/keynotes/modern-react/banner.webp"
+import sailsCover from "../../public/keynotes/sailsconf-2026/cover.webp"
+import sailsLinks from "../../public/keynotes/sailsconf-2026/links.webp"
 
 <ContentWrapper className="typography">
   # Keynotes
 
   All Keynotes, Panel and Mentorship sessions.
 </ContentWrapper>
+
+<TimelineArticle id="sailsconf-2026" date="October 22, 2026">
+  **Talk**
+
+  ## Building E2E Systems with AI
+
+  At SailsConf 2026: lessons on system design from a frontend engineer. How the UX decides what every layer must do, why precise words give the AI precise systems, and how skills and code review turn AI-built features into knowledge that sticks.
+
+  <SpineAccordion
+    label="Building E2E Systems with AI slides"
+    className="my-8"
+    items={[
+      { id: "one", title: "One", image: sailsCover, alt: "Title slide: Building E2E Systems with AI, lessons on system design from a frontend engineer, SailsConf 2026, Tony Edgal" },
+      { id: "two", title: "Two", image: sailsLinks, alt: "Links slide: Get the skills. Say hello. github.com/spacemansh/spaceman-skills, skills.sh/spacemansh/spaceman-skills, and tony.spaceman.sh" },
+    ]}
+  />
+</TimelineArticle>
+
+<TimelineArticle id="ai-conference-benin-city-2" date="September 26, 2026">
+  **Panel**
+
+  ## Catalysing Africa's Digital Economy: What Will It Take to Scale AI Solutions?
+
+  A panel at AI Conference Benin City 2.0, hosted by GritinAI at Victor Uwaifo Hub. The panel asked what must be true, structurally and commercially, for AI solutions built in Africa to reach millions of users, across compute, talent, capital, data and policy.
+
+  <SpineAccordion
+    label="AI Conference Benin City 2.0 photos"
+    className="my-8"
+    items={[
+      { id: "one", title: "One", image: aiTwo152316, alt: "Panelists seated on stage at AI Conference Benin City 2.0, one speaking into a microphone" },
+      { id: "two", title: "Two", image: aiTwo152403, alt: "Two panelists seated on stage under green light, listening" },
+      { id: "three", title: "Three", image: aiTwo152605, alt: "A panelist speaking into a microphone on stage under purple light" },
+      { id: "four", title: "Four", image: aiTwo152644, alt: "Two panelists on stage, one holding a microphone while the other listens" },
+    ]}
+  />
+</TimelineArticle>
+
+<TimelineArticle id="devfest-benin" date="December 11, 2025">
+  **Keynote**
+
+  ## Compound Components: The Idea Behind React's #1 Component Library
+
+  A keynote at DevFest Benin, hosted by Google Developer Group (GDG) Benin. Why shadcn/ui overtook Material UI, and how compound components (a parent that holds state, and children that read it through context) power its flexibility.
+
+  <SpineAccordion
+    label="DevFest Benin photos"
+    className="my-8"
+    items={[
+      { id: "one", title: "One", image: devfest5298, alt: "Tony Edgal speaking into a microphone at DevFest Benin" },
+      { id: "two", title: "Two", image: devfest5299, alt: "Tony Edgal holding a microphone and addressing the audience at DevFest Benin" },
+      { id: "three", title: "Three", image: devfest5304, alt: "Tony Edgal speaking on stage in front of the DevFest Benin backdrop" },
+      { id: "four", title: "Four", image: devfest5324, alt: "Tony Edgal on the DevFest Benin stage, seen from the floor" },
+    ]}
+  />
+</TimelineArticle>
+
+<TimelineArticle id="ai-conference-benin-city-1" date="September 26, 2025">
+  **Keynote**
+
+  ## Building Products with AI for Free
+
+  A keynote at the first AI Conference Benin City: how to make free-tier LLMs perform like their paid counterparts, with short context windows, PRDs, plans and checklists, and the right free tool for each task.
+
+  <SpineAccordion
+    label="AI Conference Benin City 1.0 photos"
+    className="my-8"
+    items={[
+      { id: "one", title: "One", image: aiOne4935, alt: "Tony Edgal speaking on stage in front of the AI Conference Benin 1.0 screen" },
+      { id: "two", title: "Two", image: aiOne4936, alt: "Tony Edgal gesturing to the audience beside the conference title screen" },
+      { id: "three", title: "Three", image: aiOne4937, alt: "Tony Edgal presenting a slide about context windows and tokens" },
+      { id: "four", title: "Four", image: aiOne4939, alt: "Tony Edgal presenting a slide about free AI tools for building, seen from the audience" },
+      { id: "five", title: "Five", image: aiOne4941, alt: "Tony Edgal standing in front of the conference sponsor wall" },
+      { id: "six", title: "Six", image: aiOne4930, alt: "Tony Edgal wearing a speaker badge, standing beside another attendee outside the venue" },
+    ]}
+  />
+</TimelineArticle>
+
+<TimelineArticle id="oscafest" date="August 16, 2025">
+  **Open-source showcase**
+
+  ## OSCAFest
+
+  A live demo of [Spaceman React Theme Animation](/projects/spaceman-react-theme-animation) at OSCAFest.
+
+  <SpineAccordion
+    label="OSCAFest photos"
+    className="my-8"
+    items={[
+      { id: "one", title: "One", image: osca4582, alt: "Tony Edgal at the podium with the theme demo on the large screens" },
+      { id: "two", title: "Two", image: osca4583, alt: "The theme demo in its light theme on the large screen behind the podium" },
+      { id: "three", title: "Three", image: osca4584, alt: "The theme demo in its dark theme on the large screen behind the podium" },
+      { id: "four", title: "Four", image: osca4585, alt: "Tony Edgal presenting the demo app with the theme control on screen" },
+    ]}
+  />
+</TimelineArticle>
+
+<TimelineArticle id="modern-react" date="July 18, 2025">
+  **Workshop**
+
+  ## Modern React: Writing modern and bulletproof React
+
+  A free public workshop at Mindshift Consultancy, Edo Innovation Hub, in collaboration with GritinAI.
+
+  <SpineAccordion
+    label="Modern React workshop photos"
+    className="my-8"
+    items={[
+      { id: "one", title: "One", image: react4311, alt: "Tony Edgal writing on a whiteboard, with a laptop showing code in the foreground" },
+      { id: "two", title: "Two", image: react4312, alt: "Tony Edgal explaining notes on the whiteboard" },
+      { id: "three", title: "Three", image: react4317, alt: "Tony Edgal drawing a diagram on the whiteboard" },
+      { id: "four", title: "Four", image: react4318, alt: "Tony Edgal writing notes on the whiteboard, seen from behind" },
+      { id: "five", title: "Five", image: react4327, alt: "Tony Edgal at a whiteboard headed 'Modern React in the age of AI'" },
+      { id: "six", title: "Six", image: reactBanner, alt: "Banner for Modern React: Writing modern and bulletproof React with Tony Edgal, 12PM Friday 18th July 2025, Mindshift Consultancy, Edo Innovation Hub" },
+    ]}
+  />
+</TimelineArticle>
