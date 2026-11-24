@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 
 import { BounceWrapper } from "@/components/ui/bounce-wrapper";
-import { timelinePhotos, type TimelinePhotoSet } from "@/lib/timeline-photos";
+import { timelinePhotos, type TimelinePhoto, type TimelinePhotoSet } from "@/lib/timeline-photos";
 
 // the stage keeps its height before the cards arrive, so nothing below it moves when they pop in
 const stageClasses = "relative h-64 sm:h-72";
@@ -76,18 +76,29 @@ export function TimelinePhotos({ set, href, linkLabel }: { set: TimelinePhotoSet
         )}
       >
         {photos.map((photo) => (
-          <div key={photo.alt} className="relative overflow-hidden rounded-xl border border-border bg-muted shadow-md">
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              sizes="520px"
-              draggable={false}
-              className="pointer-events-none object-cover select-none"
-            />
-          </div>
+          <PhotoCard key={photo.alt} photo={photo} />
         ))}
       </BounceWrapper>
     </Bleed>
+  );
+}
+
+function PhotoCard({ photo }: { photo: TimelinePhoto }) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="relative overflow-hidden rounded-xl border border-border bg-muted shadow-md">
+      {!loaded && <span aria-hidden="true" className="shimmer absolute inset-0" />}
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        sizes="520px"
+        draggable={false}
+        onLoad={() => setLoaded(true)}
+        data-loaded={loaded || undefined}
+        className="pointer-events-none object-cover opacity-0 transition-opacity duration-500 ease-out select-none data-loaded:opacity-100"
+      />
+    </div>
   );
 }
