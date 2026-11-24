@@ -107,3 +107,29 @@ export function setSoundEnabled(enabled: boolean) {
   else root.dataset.sound = "off";
   save("sound", enabled ? "on" : "off");
 }
+
+// one level for every sound on the site, from the scroll ticks to the switch clicks; stored as a
+// fraction and read on demand, since nothing plays before the first gesture
+export const minSoundLevel = 0.05;
+
+let soundLevelCache: number | undefined;
+
+export function readSoundLevel(): number {
+  if (soundLevelCache !== undefined) return soundLevelCache;
+  let level = 1;
+  try {
+    const saved = Number.parseFloat(localStorage.getItem("portfolio-sound-level") ?? "");
+    if (Number.isFinite(saved)) level = Math.min(Math.max(saved, minSoundLevel), 1);
+  } catch {}
+  soundLevelCache = level;
+  return level;
+}
+
+export function useSoundLevel() {
+  return useSyncExternalStore(subscribe, readSoundLevel, () => 1);
+}
+
+export function setSoundLevel(level: number) {
+  soundLevelCache = Math.min(Math.max(level, minSoundLevel), 1);
+  save("sound-level", String(soundLevelCache));
+}
