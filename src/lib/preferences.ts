@@ -66,6 +66,34 @@ export function setNavStyle(style: NavStyle) {
   save("nav", style);
 }
 
+// how notifications look: the notch attached to the top edge, or the earlier floating card
+export const toastStyles = ["notch", "card"] as const;
+
+export type ToastStyle = (typeof toastStyles)[number];
+
+let toastStyleCache: ToastStyle | undefined;
+
+// read from storage on demand rather than before paint, because nothing shows until the first toast
+export function readToastStyle(): ToastStyle {
+  if (toastStyleCache) return toastStyleCache;
+  try {
+    toastStyleCache = localStorage.getItem("portfolio-toast") === "card" ? "card" : "notch";
+  } catch {
+    toastStyleCache = "notch";
+  }
+  return toastStyleCache;
+}
+
+// null on the server and during hydration, so a toaster mounts only once the saved choice is known
+export function useToastStyle() {
+  return useSyncExternalStore(subscribe, readToastStyle, () => null);
+}
+
+export function setToastStyle(style: ToastStyle) {
+  toastStyleCache = style;
+  save("toast", style);
+}
+
 const soundSnapshot = () => document.documentElement.dataset.sound !== "off";
 
 export function useSoundEnabled() {
