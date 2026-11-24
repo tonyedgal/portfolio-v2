@@ -833,6 +833,16 @@
   }
 }
 
+/* below lg the card toast sits on the bottom navbar, not over the start of the page; html outranks the
+   toast's own injected rule */
+html .tst-viewport[data-position^="bottom"] .tst-slot {
+  bottom: calc(var(--mobile-nav-height) + 0.5rem);
+}
+/* the open settings bar takes the same place, so the toast moves up above it */
+html:has([aria-label="Display settings"][data-open="true"]) .tst-viewport[data-position^="bottom"] .tst-slot {
+  bottom: calc(var(--mobile-nav-height) + 3.5rem);
+}
+
 /* the notch shrinks its action button to fit and breaks "Turn off" over two lines; html outranks the
    notch's own injected rule */
 html .nt-action {

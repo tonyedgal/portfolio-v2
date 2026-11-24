@@ -3,7 +3,9 @@
 import {
   Activity,
   Grid3x3,
+  MessageSquare,
   PanelBottom,
+  PanelTop,
   RectangleEllipsis,
   Volume2,
   VolumeOff,
@@ -18,10 +20,12 @@ import {
   setMotionEnabled,
   setNavStyle,
   setSoundEnabled,
+  setToastStyle,
   useBackdrop,
   useMotionEnabled,
   useNavStyle,
   useSoundEnabled,
+  useToastStyle,
 } from "@/lib/preferences";
 import { playSelect, playSwitch } from "@/lib/sounds";
 
@@ -61,6 +65,7 @@ export function SettingsNav({
   const motion = useMotionEnabled();
   const navStyle = useNavStyle();
   const sound = useSoundEnabled();
+  const cards = useToastStyle() === "card";
   const [pickerOpen, setPickerOpen] = useState(false);
   const grid = backdrop === "grid";
   const tabs = navStyle === "tabs";
@@ -149,6 +154,23 @@ export function SettingsNav({
               <RectangleEllipsis aria-hidden="true" className="size-[15px]" />
             ) : (
               <PanelBottom aria-hidden="true" className="size-[15px]" />
+            )}
+          </button>
+        </Hint>
+        <Hint label={cards ? "Switch to notch notifications" : "Switch to card notifications"}>
+          <button
+            type="button"
+            aria-label={cards ? "Notification style: cards" : "Notification style: notch"}
+            onClick={() => {
+              playSelect();
+              setToastStyle(cards ? "notch" : "card");
+            }}
+            className={iconToggleClasses}
+          >
+            {cards ? (
+              <MessageSquare aria-hidden="true" className="size-[15px]" />
+            ) : (
+              <PanelTop aria-hidden="true" className="size-[15px]" />
             )}
           </button>
         </Hint>
