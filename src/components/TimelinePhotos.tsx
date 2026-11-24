@@ -54,12 +54,8 @@ export function TimelinePhotos({ set, href, linkLabel }: { set: TimelinePhotoSet
         stagger={0.08}
         labels={photos.map((photo) => photo.alt)}
         openAttribute="data-cards-open"
-        renderCaption={(i) => (
+        renderCaption={() => (
           <>
-            <p className="font-mono text-xs text-muted-foreground tabular-nums">
-              {String(i + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
-            </p>
-            <p className="max-w-md text-sm text-pretty text-foreground">{photos[i]?.alt}</p>
             <div className="flex items-center gap-2">
               <Link
                 href={href}
