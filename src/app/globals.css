@@ -801,6 +801,16 @@
   animation-delay: 0s !important;
 }
 
+/* an open photo carousel covers the page, and the navbar steps aside so the caption stays clear */
+[data-bounce-backdrop] {
+  background: color-mix(in oklab, var(--background) 88%, transparent);
+  backdrop-filter: blur(8px);
+}
+html[data-cards-open] [data-floating-nav] {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.4 0 0 0 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px;
