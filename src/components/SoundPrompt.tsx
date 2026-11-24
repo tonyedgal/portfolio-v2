@@ -12,6 +12,15 @@ const askId = "sound-ask";
 const askMs = 8000;
 const noticeMs = 8000;
 const settingsHint = "Change it anytime with the settings button in the navbar.";
+// each follow-up names what the visitor can still change from the settings bar
+const soundOnHint = "Adjust the volume or turn it off anytime in settings.";
+const soundOffHint = "Turn it back on anytime in settings.";
+// the notch shows one line that phones cut short, so "sound is on" comes first and then the line
+// slides to the settings hint
+const notchSoundOnId = "sound-on";
+const notchHintDelayMs = 2500;
+const notchSoundHint = "Set volume or turn off in settings";
+const notchSoundOff = "Sound is off. Turn it on in settings";
 
 // the card takes only an image url, so the settings icon travels as an inline svg
 const settingsIcon = `data:image/svg+xml,${encodeURIComponent(
@@ -22,10 +31,10 @@ const soundOff = () => document.documentElement.dataset.sound === "off";
 
 // the card has room for a description, so it points at the settings button there; the notch fits
 // only a title, so its follow-up says it in fewer words
-const cardFollowUp = (title: string) => ({
-  type: "info" as const,
-  title,
-  description: settingsHint,
+const cardFollowUp = (on: boolean) => ({
+  type: on ? ("success" as const) : ("info" as const),
+  title: on ? "Sound is on" : "Sound is off",
+  description: on ? soundOnHint : soundOffHint,
   image: settingsIcon,
   duration: noticeMs,
   action: null,
@@ -42,13 +51,14 @@ function showSoundOn() {
   if (readToastStyle() === "card") {
     // an open card turns into the new one in place, so the ask becomes this notice
     card.success("Sound is on", {
-      description: "Small clicks as you scroll.",
+      description: soundOnHint,
+      image: settingsIcon,
       duration: noticeMs,
       action: {
         label: "Turn off",
         onClick: () => {
           turnOff();
-          return cardFollowUp("Sound is off");
+          return cardFollowUp(false);
         },
       },
     });
@@ -56,15 +66,22 @@ function showSoundOn() {
   }
 
   notch.success("Sound is on", {
+    id: notchSoundOnId,
     duration: noticeMs,
     action: {
       label: "Turn off",
       onClick: () => {
         turnOff();
-        notch.info("Sound is off. Turn it on in settings", { duration: noticeMs });
+        notch.info(notchSoundOff, { duration: noticeMs });
       },
     },
   });
+  // an update only reaches a notch that is still open, so a closed or replaced one stays gone
+  window.setTimeout(() => {
+    if (soundOff()) return;
+    // the hint needs the whole width, so the Turn off button gives way to it
+    notch.update(notchSoundOnId, { title: notchSoundHint, duration: noticeMs, action: undefined });
+  }, notchHintDelayMs);
 }
 
 // browsers block sound on every new page load until a click, and a scroll never counts, so each full
@@ -90,7 +107,7 @@ function ask() {
           answered = true;
           setSoundEnabled(true);
           playSwitch(true);
-          return cardFollowUp("Sound is on");
+          return cardFollowUp(true);
         },
       },
       secondary: {
@@ -98,7 +115,7 @@ function ask() {
         onClick: () => {
           answered = true;
           setSoundEnabled(false);
-          return cardFollowUp("Sound is off");
+          return cardFollowUp(false);
         },
       },
     });
