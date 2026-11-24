@@ -2,6 +2,7 @@
 
 import { scroll001Sound } from "@/lib/scroll-001";
 import { select008Sound } from "@/lib/select-008";
+import { readSoundLevel } from "@/lib/preferences";
 import { decodeAudioData, getAudioContext, playSound } from "@/lib/sound-engine";
 import { switchOffSound } from "@/lib/switch-off";
 import { switchOnSound } from "@/lib/switch-on";
@@ -9,15 +10,19 @@ import { switchOnSound } from "@/lib/switch-on";
 const soundOn = () =>
   typeof document !== "undefined" && document.documentElement.dataset.sound !== "off";
 
+// ears hear loudness roughly on a log scale, so the squared level makes the slider's middle sound
+// like the middle rather than nearly full
+const level = () => readSoundLevel() ** 2;
+
 export function playSwitch(on: boolean) {
   if (!soundOn()) return;
-  playSound((on ? switchOnSound : switchOffSound).dataUri, { volume: 0.4 }).catch(() => {});
+  playSound((on ? switchOnSound : switchOffSound).dataUri, { volume: 0.4 * level() }).catch(() => {});
 }
 
 // for choices between options, where on and off do not apply
 export function playSelect() {
   if (!soundOn()) return;
-  playSound(select008Sound.dataUri, { volume: 0.4 }).catch(() => {});
+  playSound(select008Sound.dataUri, { volume: 0.4 * level() }).catch(() => {});
 }
 
 // the sample is a ratchet with one click about every 50ms, so at rate 1 it clicks 20 times a second;
@@ -66,7 +71,7 @@ export function startScrollSound() {
     const ctx = getAudioContext();
     const rate = Math.min(Math.max(speed / (tickSpacing * clicksPerSecond), 0.5), 3);
     source.playbackRate.setTargetAtTime(rate, ctx.currentTime, 0.03);
-    gain.gain.setTargetAtTime(volume, ctx.currentTime, 0.02);
+    gain.gain.setTargetAtTime(volume * level(), ctx.currentTime, 0.02);
 
     window.clearTimeout(stopTimer);
     stopTimer = window.setTimeout(() => {
