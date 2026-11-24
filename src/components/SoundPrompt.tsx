@@ -1,67 +1,81 @@
 "use client";
 
-import { useTheme } from "@space-man/react-theme-animation";
-import { Toaster, toast } from "@yusufceng1z/ding-react";
-import { useEffect, useSyncExternalStore } from "react";
+import { NotchToaster, toast } from "notch-toast";
+import { useEffect } from "react";
 
 import { setSoundEnabled } from "@/lib/preferences";
 import { playSwitch } from "@/lib/sounds";
 
-const followUpMs = 4000;
-// the toast takes only an image url, so the settings icon travels as an inline svg
-const settingsIcon = `data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 36 36" fill="none" stroke="#8a8a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 17H5"/><path d="M19 7h-9"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>',
-)}`;
+const askId = "sound-ask";
+const askMs = 8000;
+const noticeMs = 8000;
 
-const followUp = (title: string) => ({
-  type: "info" as const,
-  title,
-  description: "Change it anytime with the settings button in the navbar.",
-  image: settingsIcon,
-  duration: followUpMs,
-});
+const soundOff = () => document.documentElement.dataset.sound === "off";
+
+// the notch has room for one button, so the way to turn sound off travels with the notice itself
+function showSoundOn() {
+  toast.success("Sound is on", {
+    duration: noticeMs,
+    action: {
+      label: "Turn off",
+      onClick: () => {
+        playSwitch(false);
+        setSoundEnabled(false);
+        toast.info("Sound is off. Turn it on in settings", { duration: noticeMs });
+      },
+    },
+  });
+}
 
 // browsers block sound on every new page load until a click, and a scroll never counts, so each full
 // load asks again; route changes keep this module alive, so they do not
 let asked = false;
+let answered = false;
 
-// the toast takes its position as a prop, so the breakpoint is read here; lg matches the navbar's own switch
-const wideQuery = "(min-width: 64rem)";
-const subscribe = (onChange: () => void) => {
-  const query = window.matchMedia(wideQuery);
-  query.addEventListener("change", onChange);
-  return () => query.removeEventListener("change", onChange);
-};
-const isWide = () => window.matchMedia(wideQuery).matches;
+function turnOn() {
+  answered = true;
+  setSoundEnabled(true);
+  playSwitch(true);
+  showSoundOn();
+}
 
 export function SoundPrompt() {
-  const wide = useSyncExternalStore(subscribe, isWide, () => true);
-  // follow the theme chosen on the site, which can differ from the system setting
-  const { resolvedTheme } = useTheme();
-
   useEffect(() => {
-    if (asked) return;
-    asked = true;
+    if (!asked) {
+      asked = true;
+      toast.info("Turn on sound?", {
+        id: askId,
+        duration: askMs,
+        dismissible: true,
+        action: { label: "Enable", onClick: turnOn },
+      });
+    }
+    if (answered) return;
 
-    toast.info("Turn on sound?", {
-      description: "Small clicks as you scroll.",
-      action: {
-        label: "Enable",
-        onClick: () => {
-          setSoundEnabled(true);
-          playSwitch(true);
-          return followUp("Sound is on");
-        },
-      },
-      secondary: {
-        label: "Disable",
-        onClick: () => {
-          setSoundEnabled(false);
-          return followUp("Sound is off");
-        },
-      },
-    });
+    // the first tap, click, or key press is the gesture that lets the browser play sound, so unless
+    // the visitor turned sound off before, it switches sound on and says how to turn it off
+    // a mouse press grants that permission on pointerdown, a finger only on pointerup
+    const events = ["pointerdown", "pointerup", "keydown"] as const;
+    const stop = () => events.forEach((type) => window.removeEventListener(type, onGesture, true));
+    function onGesture(event: Event) {
+      if (answered) return stop();
+      if (navigator.userActivation && !navigator.userActivation.isActive) return;
+      // using the notch itself, or Escape to close it, answers the question rather than starting sound
+      if (event instanceof KeyboardEvent && event.key === "Escape") return;
+      if (event.target instanceof Element && event.target.closest(".nt-root")) return;
+
+      stop();
+      if (soundOff()) {
+        answered = true;
+        return;
+      }
+      turnOn();
+    }
+    events.forEach((type) => window.addEventListener(type, onGesture, { capture: true, passive: true }));
+
+    return stop;
   }, []);
 
-  return <Toaster position={wide ? "top-center" : "bottom-center"} theme={resolvedTheme} />;
+  // top centre on every width keeps the notch clear of the navbar, which sits at the bottom on phones
+  return <NotchToaster position="top-center" mode="attached" />;
 }

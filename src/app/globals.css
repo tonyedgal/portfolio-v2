@@ -833,12 +833,23 @@
   }
 }
 
-/* below lg the sound toast sits on the bottom navbar, not over the start of the page; html outranks the
-   toast's own injected rule */
-html .tst-viewport[data-position^="bottom"] .tst-slot {
-  bottom: calc(var(--mobile-nav-height) + 0.5rem);
+/* the notch shrinks its action button to fit and breaks "Turn off" over two lines; html outranks the
+   notch's own injected rule */
+html .nt-action {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
-/* the open settings bar takes the same place, so the toast moves up above it */
-html:has([aria-label="Display settings"][data-open="true"]) .tst-viewport[data-position^="bottom"] .tst-slot {
-  bottom: calc(var(--mobile-nav-height) + 3.5rem);
+
+/* the notch paints its surface with --foreground and its text with --background, which inverts it
+   against the page; inside the notch those two point at the palette's muted surface and its ink
+   instead, so it keeps each route's tint and follows light and dark mode */
+html .nt-root {
+  --nt-surface: var(--muted);
+  --nt-ink: var(--foreground);
+}
+html .nt-shell {
+  --foreground: var(--nt-surface);
+  --background: var(--nt-ink);
+  /* the notch's drop shadow reads as a smudge under a surface this close to the page */
+  box-shadow: none;
 }
