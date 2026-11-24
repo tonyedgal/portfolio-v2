@@ -10,13 +10,14 @@ function ArticleHeader({ id, date }: { id: string; date: string }) {
     <header className="relative mb-10 xl:mb-0">
       {/* the date wraps inside the content gutter, so wide theme fonts never run into the entry */}
       <div className="pointer-events-none absolute top-0 left-0 z-40 flex h-4 items-center gap-x-2 lg:left-0 xl:h-8">
-        <div className="h-px w-3.5 bg-border" />
+        <div data-timeline-marker className="h-px w-3.5 bg-border" />
         <Link href={`#${id}`} className="hidden xl:pointer-events-auto xl:block xl:max-w-[9.5rem] xl:text-xs/4 xl:font-medium xl:text-balance xl:text-muted-foreground">
           {date}
         </Link>
       </div>
       <ContentWrapper>
-        <Link href={`#${id}`} className="text-xs/4 font-medium text-muted-foreground xl:hidden">
+        {/* a block link keeps its own 16px line; inline, it sat on the prose's taller line, below the marker */}
+        <Link href={`#${id}`} className="block w-fit text-xs/4 font-medium text-muted-foreground xl:hidden">
           {date}
         </Link>
       </ContentWrapper>
