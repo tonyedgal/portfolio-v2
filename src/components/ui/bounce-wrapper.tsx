@@ -17,6 +17,8 @@ export type BounceWrapperProps = {
   labels?: string[]
   /** item edge at full size, in px; it shrinks to fit the stage */
   itemSize?: number
+  /** 'start' sets the fan's left edge on the stage's left padding edge */
+  align?: 'center' | 'start'
   /** below this edge the fan turns into a marquee */
   minItemSize?: number
   /** 'auto' switches below minItemSize; 'always' and 'never' force it */
@@ -154,6 +156,7 @@ function createMount(o: Options) {
     const bottom = Math.max(...poses.map((p, i) => p.y + (halfHeights[i] ?? 0)))
     const centreY = (top + bottom) / 2
     const reach = Math.max(...poses.map((p) => Math.abs(p.x)))
+    const halfWidth = Math.max(...halfHeights)
     const fanWidth = reach * 2 + unit
     const fanHeight = bottom - top + 96
 
@@ -255,9 +258,17 @@ function createMount(o: Options) {
               width / 2 - 16 - size / 2 - reach * d,
             ),
           )
+      // slots are measured from the stage centre, so a start-aligned fan moves left by the spare width
+      const shift =
+        o.align === 'start' && !marquee
+          ? parseFloat(getComputedStyle(stage).paddingLeft) -
+            width / 2 +
+            (reach + halfWidth) * d
+          : 0
+
       poses.forEach((pose, i) => {
         slots[i] = {
-          x: marquee ? 0 : pose.x * d,
+          x: marquee ? 0 : pose.x * d + shift,
           y: (pose.y - (marquee ? 0 : centreY)) * d,
           rotate: pose.rotate,
         }
@@ -753,7 +764,8 @@ function createMount(o: Options) {
 
     const resize = new ResizeObserver(layout)
 
-    resize.observe(stage)
+    // the border box also changes when only the padding does, which moves a start-aligned fan
+    resize.observe(stage, { box: 'border-box' })
     stage.addEventListener('pointermove', onMove)
     stage.addEventListener('pointerleave', onLeave)
     stage.addEventListener('pointerdown', onDown)
@@ -812,6 +824,7 @@ export function BounceWrapper({
   children,
   labels = [],
   itemSize = 248,
+  align = 'center',
   minItemSize = 150,
   marquee = 'auto',
   overlap = 0.125,
@@ -841,6 +854,7 @@ export function BounceWrapper({
     () =>
       createMount({
         itemSize,
+        align,
         minItemSize,
         marquee,
         overlap,
@@ -861,6 +875,7 @@ export function BounceWrapper({
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- they are read from the DOM and by intent
     [
       itemSize,
+      align,
       minItemSize,
       marquee,
       overlap,

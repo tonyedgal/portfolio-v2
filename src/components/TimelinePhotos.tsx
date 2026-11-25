@@ -7,8 +7,9 @@ import { useCallback, useState } from "react";
 import { BounceWrapper } from "@/components/ui/bounce-wrapper";
 import { timelinePhotos, type TimelinePhoto, type TimelinePhotoSet } from "@/lib/timeline-photos";
 
-// the stage keeps its height before the cards arrive, so nothing below it moves when they pop in
-const stageClasses = "relative h-64 sm:h-72";
+// the stage keeps its height before the cards arrive, so nothing below it moves when they pop in; its left
+// padding undoes the bleed, so the start-aligned fan lines up with the text above it
+const stageClasses = "relative h-64 pl-4 sm:h-72 sm:pl-8 md:pl-10 lg:pl-0";
 
 // below lg the cards run to the right edge and stop just short of the timeline line on the left, and the clip
 // stops the drifting row from widening the page; wider screens show the fan without a clip, which would cut the open carousel at the column edge
@@ -49,6 +50,7 @@ export function TimelinePhotos({ set, href, linkLabel }: { set: TimelinePhotoSet
       <BounceWrapper
         className={stageClasses}
         itemSize={208}
+        align="start"
         minItemSize={132}
         entranceDelay={0.05}
         stagger={0.08}
