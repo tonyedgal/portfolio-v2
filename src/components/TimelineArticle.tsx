@@ -16,7 +16,8 @@ function ArticleHeader({ id, date }: { id: string; date: string }) {
         </Link>
       </div>
       <ContentWrapper>
-        <Link href={`#${id}`} className="text-xs/4 font-medium text-muted-foreground xl:hidden">
+        {/* a block link keeps its own 16px line; inline, it sat on the prose's taller line, below the marker */}
+        <Link href={`#${id}`} className="block w-fit text-xs/4 font-medium text-muted-foreground xl:hidden">
           {date}
         </Link>
       </ContentWrapper>
